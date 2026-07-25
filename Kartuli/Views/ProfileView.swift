@@ -4,7 +4,10 @@ struct ProfileView: View {
     @EnvironmentObject private var store: LearningStore
     @AppStorage("isDarkMode") private var isDarkMode = false
     @AppStorage("profileAvatar") private var selectedAvatarID = ProfileAvatar.khinkali.rawValue
+    @AppStorage("reminderEnabled") private var reminderEnabled = false
+    @AppStorage("reminderTimeMinutes") private var reminderTimeMinutes = 9 * 60
     @State private var isAvatarPickerPresented = false
+    @State private var reminderError: String?
     private var selectedAvatar: ProfileAvatar {
         ProfileAvatar(rawValue: selectedAvatarID) ?? .khinkali
     }
@@ -67,11 +70,7 @@ struct ProfileView: View {
                             }
                             .padding(.vertical, 11)
                             Divider().padding(.leading, 48)
-                            settingsRow("speaker.wave.2.fill", "Sound effects", "On")
-                            Divider().padding(.leading, 48)
-                            settingsRow("target", "Daily goal", "30 XP")
-                            Divider().padding(.leading, 48)
-                            settingsRow("bell.fill", "Reminders", "9:00 AM")
+                            reminderSettings
                         }
                         .padding(.horizontal, 16).glassEffect(.regular, in: .rect(cornerRadius: 26))
                     }
@@ -83,6 +82,86 @@ struct ProfileView: View {
                 AvatarPicker(selectedAvatarID: $selectedAvatarID)
                     .presentationDetents([.height(390)])
                     .presentationDragIndicator(.visible)
+            }
+            .alert("Reminders unavailable", isPresented: Binding(
+                get: { reminderError != nil },
+                set: { if !$0 { reminderError = nil } }
+            )) {
+                Button("OK", role: .cancel) { reminderError = nil }
+            } message: {
+                Text(reminderError ?? "")
+            }
+        }
+    }
+
+    private var reminderDate: Binding<Date> {
+        Binding {
+            Calendar.current.date(
+                bySettingHour: reminderTimeMinutes / 60,
+                minute: reminderTimeMinutes % 60,
+                second: 0,
+                of: Date()
+            ) ?? Date()
+        } set: { newValue in
+            let components = Calendar.current.dateComponents([.hour, .minute], from: newValue)
+            reminderTimeMinutes = (components.hour ?? 9) * 60 + (components.minute ?? 0)
+            guard reminderEnabled else { return }
+            Task {
+                _ = await ReminderManager.setReminder(
+                    enabled: true,
+                    minutesAfterMidnight: reminderTimeMinutes
+                )
+            }
+        }
+    }
+
+    private var reminderSettings: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 13) {
+                Image(systemName: "bell.fill")
+                    .frame(width: 25)
+                    .foregroundStyle(AppTheme.violet)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Daily reminder").foregroundStyle(AppTheme.ink)
+                    Text(reminderEnabled ? reminderDate.wrappedValue.formatted(date: .omitted, time: .shortened) : "Off")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.secondary)
+                }
+                Spacer()
+                Toggle("Daily reminder", isOn: Binding(
+                    get: { reminderEnabled },
+                    set: updateReminder
+                ))
+                .labelsHidden()
+                .tint(AppTheme.coral)
+            }
+            .padding(.vertical, 11)
+
+            if reminderEnabled {
+                Divider().padding(.leading, 48)
+                DatePicker(
+                    "Reminder time",
+                    selection: reminderDate,
+                    displayedComponents: .hourAndMinute
+                )
+                .foregroundStyle(AppTheme.ink)
+                .padding(.leading, 38)
+                .padding(.vertical, 11)
+            }
+        }
+    }
+
+    private func updateReminder(_ enabled: Bool) {
+        Task {
+            let scheduled = await ReminderManager.setReminder(
+                enabled: enabled,
+                minutesAfterMidnight: reminderTimeMinutes
+            )
+            if enabled && !scheduled {
+                reminderEnabled = false
+                reminderError = "Allow notifications for Kartuli in Settings to receive your daily learning reminder."
+            } else {
+                reminderEnabled = enabled
             }
         }
     }

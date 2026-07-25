@@ -15,6 +15,15 @@ struct KartuliApp: App {
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
                 store.refreshForCurrentDay()
+                if UserDefaults.standard.bool(forKey: "reminderEnabled") {
+                    let minutes = UserDefaults.standard.integer(forKey: "reminderTimeMinutes")
+                    Task {
+                        _ = await ReminderManager.setReminder(
+                            enabled: true,
+                            minutesAfterMidnight: minutes
+                        )
+                    }
+                }
             }
         }
     }

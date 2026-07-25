@@ -53,19 +53,28 @@ struct AlphabetView: View {
     }
 
     private var endlessCard: some View {
-        Button { isEndlessPresented = true } label: {
+        Button {
+            if store.isEndlessUnlocked {
+                isEndlessPresented = true
+            }
+        } label: {
             HStack(spacing: 16) {
                 ZStack {
                     Circle().fill(.white.opacity(0.18)).frame(width: 64, height: 64)
-                    Image(systemName: "infinity").font(.system(size: 29, weight: .bold)).foregroundStyle(.white)
+                    Image(systemName: store.isEndlessUnlocked ? "infinity" : "lock.fill")
+                        .font(.system(size: 29, weight: .bold)).foregroundStyle(.white)
                 }
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("ENDLESS PRACTICE").font(.caption2.bold()).tracking(1.1).foregroundStyle(AppTheme.yellow)
-                    Text("Keep the letters flowing").font(.headline.bold()).foregroundStyle(.white)
-                    Text("All 33 letters · No time limit").font(.caption).foregroundStyle(.white.opacity(0.75))
+                    Text(store.isEndlessUnlocked ? "ENDLESS PRACTICE" : "LOCKED")
+                        .font(.caption2.bold()).tracking(1.1).foregroundStyle(AppTheme.yellow)
+                    Text(store.isEndlessUnlocked ? "Keep the letters flowing" : "Complete your alphabet path")
+                        .font(.headline.bold()).foregroundStyle(.white)
+                    Text(store.isEndlessUnlocked ? "High score \(store.endlessBest) · No time limit" : "\(store.learnedLetterIDs.count) of \(GeorgianLetter.all.count) letters learned")
+                        .font(.caption).foregroundStyle(.white.opacity(0.75))
                 }
                 Spacer()
-                Image(systemName: "play.fill").foregroundStyle(AppTheme.onLightSurface).padding(13).background(.white, in: Circle())
+                Image(systemName: store.isEndlessUnlocked ? "play.fill" : "flag.checkered")
+                    .foregroundStyle(AppTheme.onLightSurface).padding(13).background(.white, in: Circle())
             }
             .padding(18)
             .background(LinearGradient(colors: [AppTheme.violet, AppTheme.blue], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 27, style: .continuous))
@@ -96,8 +105,9 @@ private struct LetterDetailView: View {
                             Text(letter.translation.capitalized).foregroundStyle(AppTheme.secondary)
                         }
                         Spacer()
-                        Button { } label: { Image(systemName: "speaker.wave.2.fill").font(.title2).foregroundStyle(AppTheme.coral).padding(15) }
-                            .glassEffect(.regular, in: .circle)
+                        Image(systemName: "text.book.closed.fill")
+                            .font(.title2)
+                            .foregroundStyle(AppTheme.coral)
                     }
                 }
                 Spacer()

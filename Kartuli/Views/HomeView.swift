@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var store: LearningStore
     @AppStorage("profileAvatar") private var selectedAvatarID = ProfileAvatar.khinkali.rawValue
+    @State private var isEndlessPresented = false
 
     private var selectedAvatar: ProfileAvatar {
         ProfileAvatar(rawValue: selectedAvatarID) ?? .khinkali
@@ -17,13 +18,20 @@ struct HomeView: View {
                         header
                         hero
                         stats
-                        nextUp
+                        if store.isEndlessUnlocked {
+                            endlessMode
+                        } else {
+                            nextUp
+                        }
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 30)
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
+            .fullScreenCover(isPresented: $isEndlessPresented) {
+                EndlessPracticeView()
+            }
         }
     }
 
@@ -49,18 +57,26 @@ struct HomeView: View {
                     Label(store.todayLabel, systemImage: "flame.fill")
                         .font(.caption.bold()).foregroundStyle(AppTheme.yellow)
                     Spacer()
-                    Text("\(store.dailyProgress)/\(store.dailyGoal) XP")
+                    Text("\(store.dailyProgress)/\(store.streakXPThreshold) XP")
                         .font(.caption.bold()).foregroundStyle(.white.opacity(0.8))
                 }
                 Text("Ready for your\nGeorgian moment?")
                     .font(.system(size: 29, weight: .heavy, design: .rounded))
                     .foregroundStyle(.white)
-                ProgressView(value: Double(store.dailyProgress), total: Double(store.dailyGoal))
+                ProgressView(value: Double(store.dailyProgress), total: Double(store.streakXPThreshold))
                     .tint(AppTheme.yellow).background(.white.opacity(0.2)).clipShape(.capsule)
                 Button {
-                    store.isLessonPresented = true
+                    if store.isEndlessUnlocked {
+                        isEndlessPresented = true
+                    } else {
+                        store.isLessonPresented = true
+                    }
                 } label: {
-                    HStack { Text("Continue lesson"); Spacer(); Image(systemName: "arrow.right") }
+                    HStack {
+                        Text(store.isEndlessUnlocked ? "Start endless mode" : "Continue lesson")
+                        Spacer()
+                        Image(systemName: "arrow.right")
+                    }
                         .foregroundStyle(AppTheme.onLightSurface)
                         .font(.headline.bold())
                         .padding(.horizontal, 18).padding(.vertical, 15)
@@ -105,7 +121,82 @@ struct HomeView: View {
                 .contentShape(Rectangle())
                 .onTapGesture { store.isLessonPresented = true }
             }
+            lockedEndlessMode
         }
+    }
+
+    private var lockedEndlessMode: some View {
+        HStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.violet.opacity(0.12))
+                    .frame(width: 62, height: 62)
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 23, weight: .bold))
+                    .foregroundStyle(AppTheme.violet)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text("ENDLESS MODE")
+                    .font(.caption2.bold())
+                    .tracking(1.1)
+                    .foregroundStyle(AppTheme.violet)
+                Text("Locked for now")
+                    .font(.headline.bold())
+                    .foregroundStyle(AppTheme.ink)
+                Text("Finish the current path to unlock")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.secondary)
+            }
+            Spacer()
+            Image(systemName: "infinity")
+                .font(.system(size: 24, weight: .bold))
+                .foregroundStyle(AppTheme.secondary.opacity(0.65))
+        }
+        .padding(18)
+        .glassEffect(.regular, in: .rect(cornerRadius: 27))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Endless Mode. Locked for now. Finish the current path to unlock.")
+    }
+
+    private var endlessMode: some View {
+        Button { isEndlessPresented = true } label: {
+            HStack(spacing: 16) {
+                ZStack {
+                    Circle().fill(.white.opacity(0.18)).frame(width: 62, height: 62)
+                    Image(systemName: "infinity")
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("ENDLESS MODE")
+                        .font(.caption2.bold())
+                        .tracking(1.1)
+                        .foregroundStyle(AppTheme.yellow)
+                    Text("High score \(store.endlessBest)")
+                        .font(.title3.bold())
+                        .foregroundStyle(.white)
+                    Text("All letters · No time limit")
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.78))
+                }
+                Spacer()
+                Image(systemName: "play.fill")
+                    .foregroundStyle(AppTheme.onLightSurface)
+                    .padding(13)
+                    .background(.white, in: Circle())
+            }
+            .padding(18)
+            .background(
+                LinearGradient(
+                    colors: [AppTheme.violet, AppTheme.blue],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ),
+                in: RoundedRectangle(cornerRadius: 27, style: .continuous)
+            )
+            .shadow(color: AppTheme.violet.opacity(0.22), radius: 16, y: 8)
+        }
+        .buttonStyle(.plain)
     }
 }
 

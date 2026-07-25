@@ -1,8 +1,12 @@
 import Foundation
 import SwiftUI
+import WidgetKit
 
 @MainActor
 final class LearningStore: ObservableObject {
+    static let appGroupID = "group.com.example.kartuli"
+    static let sharedStreakKey = "sharedStreak"
+
     @Published var selectedTab = 0
     @Published private(set) var learnedLetterIDs: Set<Int>
     @Published private(set) var xp: Int
@@ -12,7 +16,8 @@ final class LearningStore: ObservableObject {
     @Published private(set) var activityDates: [Date]
     @Published var isLessonPresented = false
 
-    let dailyGoal = 30
+    /// A streak day is complete once the learner earns this many XP.
+    let streakXPThreshold = 30
     let learningStartedAt: Date
 
     private let defaults: UserDefaults
@@ -26,6 +31,7 @@ final class LearningStore: ObservableObject {
         static let dailyProgress = "dailyProgress"
         static let dailyProgressDate = "dailyProgressDate"
         static let endlessBest = "endlessBest"
+        static let endlessScoreDataVersion = "endlessScoreDataVersion"
         static let activityDates = "activityDates"
         static let learningStartedAt = "learningStartedAt"
     }
@@ -43,6 +49,12 @@ final class LearningStore: ObservableObject {
             Self.removeLegacyProgress(from: defaults)
             defaults.set(Self.currentDataVersion, forKey: Keys.dataVersion)
             defaults.set(now, forKey: Keys.learningStartedAt)
+        }
+        if defaults.integer(forKey: Keys.endlessScoreDataVersion) < 1 {
+            // Older builds stored the best combo here. Endless high score now
+            // represents the number of correct answers in a session.
+            defaults.removeObject(forKey: Keys.endlessBest)
+            defaults.set(1, forKey: Keys.endlessScoreDataVersion)
         }
 
         learningStartedAt = defaults.object(forKey: Keys.learningStartedAt) as? Date ?? now
@@ -66,8 +78,24 @@ final class LearningStore: ObservableObject {
         return Array((remaining.isEmpty ? GeorgianLetter.all : remaining).prefix(3))
     }
 
+    var isPathComplete: Bool {
+        GeorgianLetter.all.allSatisfy { learnedLetterIDs.contains($0.id) }
+    }
+
+    var isEndlessUnlocked: Bool {
+        isPathComplete
+    }
+
     var todayLabel: String {
-        streak == 0 ? "START TODAY" : "DAY \(streak)"
+        hasSecuredStreakToday ? "STREAK SECURED" : "\(xpUntilStreak) XP TO STREAK"
+    }
+
+    var hasSecuredStreakToday: Bool {
+        activityDates.contains { calendar.isDate($0, inSameDayAs: Date()) }
+    }
+
+    var xpUntilStreak: Int {
+        max(0, streakXPThreshold - dailyProgress)
     }
 
     var currentWeekActivity: [(label: String, isActive: Bool)] {
@@ -83,13 +111,17 @@ final class LearningStore: ObservableObject {
         }
     }
 
-    func completeLesson(_ letters: [GeorgianLetter]) {
+    @discardableResult
+    func completeLesson(_ letters: [GeorgianLetter]) -> Bool {
+        let wasUnlocked = isEndlessUnlocked
         learnedLetterIDs.formUnion(letters.map(\.id))
         registerActivity(earnedXP: 30)
+        return !wasUnlocked && isEndlessUnlocked
     }
 
-    func completeEndlessPractice(correct: Int, bestCombo: Int) {
-        endlessBest = max(endlessBest, bestCombo)
+    func completeEndlessPractice(correct: Int) {
+        guard isEndlessUnlocked else { return }
+        endlessBest = max(endlessBest, correct)
         if correct > 0 {
             registerActivity(earnedXP: correct * 2)
         } else {
@@ -98,6 +130,14 @@ final class LearningStore: ObservableObject {
     }
 
     func refreshForCurrentDay(now: Date = Date()) {
+        let previousStreak = streak
+        defer {
+            if streak != previousStreak {
+                defaults.set(streak, forKey: Keys.streak)
+            }
+            syncStreakToWidget()
+        }
+
         let progressDate = defaults.object(forKey: Keys.dailyProgressDate) as? Date
         if progressDate.map({ calendar.isDate($0, inSameDayAs: now) }) != true {
             dailyProgress = 0
@@ -118,8 +158,12 @@ final class LearningStore: ObservableObject {
     private func registerActivity(earnedXP: Int, now: Date = Date()) {
         refreshForCurrentDay(now: now)
 
+        xp += earnedXP
+        dailyProgress = min(streakXPThreshold, dailyProgress + earnedXP)
+        defaults.set(now, forKey: Keys.dailyProgressDate)
+
         let wasAlreadyActiveToday = activityDates.contains { calendar.isDate($0, inSameDayAs: now) }
-        if !wasAlreadyActiveToday {
+        if dailyProgress >= streakXPThreshold && !wasAlreadyActiveToday {
             let previousActivity = activityDates.max()
             let yesterday = calendar.date(byAdding: .day, value: -1, to: now)
             if let previousActivity,
@@ -132,9 +176,6 @@ final class LearningStore: ObservableObject {
             activityDates.append(calendar.startOfDay(for: now))
         }
 
-        xp += earnedXP
-        dailyProgress = min(dailyGoal, dailyProgress + earnedXP)
-        defaults.set(now, forKey: Keys.dailyProgressDate)
         persist()
     }
 
@@ -146,6 +187,12 @@ final class LearningStore: ObservableObject {
         defaults.set(endlessBest, forKey: Keys.endlessBest)
         defaults.set(activityDates, forKey: Keys.activityDates)
         defaults.set(learningStartedAt, forKey: Keys.learningStartedAt)
+        syncStreakToWidget()
+    }
+
+    private func syncStreakToWidget() {
+        UserDefaults(suiteName: Self.appGroupID)?.set(streak, forKey: Self.sharedStreakKey)
+        WidgetCenter.shared.reloadTimelines(ofKind: "KartuliStreakWidget")
     }
 
     private static func removeLegacyProgress(from defaults: UserDefaults) {

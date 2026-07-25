@@ -220,6 +220,9 @@ struct EndlessPracticeView: View {
                 metric("\(accuracy)%", "accuracy", AppTheme.blue)
                 metric("\(bestCombo)", "best combo", AppTheme.yellow)
             }
+            Label("+\(correct * 2) XP earned · 30 XP secures your streak", systemImage: "bolt.fill")
+                .font(.subheadline.bold())
+                .foregroundStyle(AppTheme.violet)
             Spacer()
             VStack(spacing: 12) {
                 Button("Keep practicing") { withAnimation { showSummary = false } }
@@ -245,7 +248,7 @@ struct EndlessPracticeView: View {
 
     private func saveIfNeeded() {
         guard !didSave else { return }
-        store.completeEndlessPractice(correct: correct, bestCombo: bestCombo)
+        store.completeEndlessPractice(correct: correct)
         didSave = true
     }
 }

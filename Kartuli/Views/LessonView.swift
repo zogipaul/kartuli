@@ -8,6 +8,7 @@ struct LessonView: View {
     @State private var selectedAnswer: Int?
     @State private var showFeedback = false
     @State private var finished = false
+    @State private var didUnlockEndless = false
 
     private var activeLetter: GeorgianLetter { letters[min(step / 2, letters.count - 1)] }
     private var isQuiz: Bool { step.isMultiple(of: 2) == false }
@@ -50,16 +51,16 @@ struct LessonView: View {
                 Text(activeLetter.name.capitalized).font(.system(size: 29, weight: .bold, design: .rounded)).foregroundStyle(AppTheme.ink)
                 Text("It sounds like “\(activeLetter.sound)”").font(.title3).foregroundStyle(AppTheme.secondary)
             }
-            GlassCard {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(activeLetter.example).font(.title2.bold()).foregroundStyle(AppTheme.ink)
-                        Text(activeLetter.translation.capitalized).foregroundStyle(AppTheme.secondary)
+                GlassCard {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(activeLetter.example).font(.title2.bold()).foregroundStyle(AppTheme.ink)
+                            Text(activeLetter.translation.capitalized).foregroundStyle(AppTheme.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "character.book.closed.fill").foregroundStyle(AppTheme.coral).font(.title2)
                     }
-                    Spacer()
-                    Image(systemName: "speaker.wave.2.fill").foregroundStyle(AppTheme.coral).font(.title2)
                 }
-            }
         }
         .padding(.top, 15)
     }
@@ -81,7 +82,12 @@ struct LessonView: View {
                             .frame(maxWidth: .infinity).frame(height: 126)
                             .glassEffect(answerGlass(option), in: .rect(cornerRadius: 28))
                             .overlay(RoundedRectangle(cornerRadius: 28).stroke(answerColor(option).opacity(selectedAnswer == option.id || showFeedback ? 0.7 : 0), lineWidth: 3))
-                    }.buttonStyle(.plain)
+                            .contentShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 126)
+                    .contentShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    .buttonStyle(.plain)
                 }
             }
             if showFeedback {
@@ -118,7 +124,8 @@ struct LessonView: View {
             } else if step + 1 < totalSteps {
                 step += 1; selectedAnswer = nil; showFeedback = false
             } else {
-                store.completeLesson(letters); withAnimation(.spring) { finished = true }
+                didUnlockEndless = store.completeLesson(letters)
+                withAnimation(.spring) { finished = true }
             }
         } label: {
             Text(isQuiz && !showFeedback ? "Check answer" : (step + 1 == totalSteps ? "Finish lesson" : "Continue"))
@@ -136,6 +143,15 @@ struct LessonView: View {
             }
             Text("Lesson complete!").font(.system(size: 34, weight: .heavy, design: .rounded)).foregroundStyle(AppTheme.ink)
             Text("You added \(letters.map(\.glyph).joined(separator: "  ")) to your alphabet.").multilineTextAlignment(.center).foregroundStyle(AppTheme.secondary)
+            if didUnlockEndless {
+                Label("Yeah — Endless Mode unlocked!", systemImage: "infinity.circle.fill")
+                    .font(.headline.bold())
+                    .foregroundStyle(AppTheme.violet)
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 14)
+                    .glassEffect(.regular.tint(AppTheme.violet.opacity(0.14)), in: .capsule)
+                    .transition(.scale.combined(with: .opacity))
+            }
             HStack(spacing: 12) {
                 StatCard(icon: "bolt.fill", value: "+30", label: "XP earned", color: AppTheme.yellow)
                 StatCard(icon: "character.book.closed.fill", value: "\(store.learnedLetterIDs.count)", label: "letters known", color: AppTheme.mint)
