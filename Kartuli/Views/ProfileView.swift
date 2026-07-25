@@ -109,7 +109,8 @@ struct ProfileView: View {
             Task {
                 _ = await ReminderManager.setReminder(
                     enabled: true,
-                    minutesAfterMidnight: reminderTimeMinutes
+                    minutesAfterMidnight: reminderTimeMinutes,
+                    hasSecuredStreakToday: store.hasSecuredStreakToday
                 )
             }
         }
@@ -155,7 +156,8 @@ struct ProfileView: View {
         Task {
             let scheduled = await ReminderManager.setReminder(
                 enabled: enabled,
-                minutesAfterMidnight: reminderTimeMinutes
+                minutesAfterMidnight: reminderTimeMinutes,
+                hasSecuredStreakToday: store.hasSecuredStreakToday
             )
             if enabled && !scheduled {
                 reminderEnabled = false

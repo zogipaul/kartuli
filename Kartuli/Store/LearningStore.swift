@@ -174,6 +174,7 @@ final class LearningStore: ObservableObject {
                 streak = 1
             }
             activityDates.append(calendar.startOfDay(for: now))
+            ReminderManager.cancelTodayReminder(now: now)
         }
 
         persist()

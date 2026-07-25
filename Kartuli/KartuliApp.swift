@@ -20,7 +20,8 @@ struct KartuliApp: App {
                     Task {
                         _ = await ReminderManager.setReminder(
                             enabled: true,
-                            minutesAfterMidnight: minutes
+                            minutesAfterMidnight: minutes,
+                            hasSecuredStreakToday: store.hasSecuredStreakToday
                         )
                     }
                 }
