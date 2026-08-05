@@ -13,12 +13,14 @@ final class LearningStore: ObservableObject {
     @Published private(set) var streak: Int
     @Published private(set) var dailyProgress: Int
     @Published private(set) var endlessBest: Int
+    @Published private(set) var masteredWordIDs: Set<Int>
     @Published private(set) var activityDates: [Date]
     @Published var isLessonPresented = false
 
     /// A streak day is complete once the learner earns this many XP.
     let streakXPThreshold = 30
     let learningStartedAt: Date
+    let welcomeMessage: String
 
     private let defaults: UserDefaults
     private let calendar: Calendar
@@ -32,6 +34,7 @@ final class LearningStore: ObservableObject {
         static let dailyProgressDate = "dailyProgressDate"
         static let endlessBest = "endlessBest"
         static let endlessScoreDataVersion = "endlessScoreDataVersion"
+        static let masteredWordIDs = "masteredWordIDs"
         static let activityDates = "activityDates"
         static let learningStartedAt = "learningStartedAt"
     }
@@ -41,6 +44,8 @@ final class LearningStore: ObservableObject {
     init(defaults: UserDefaults = .standard, calendar: Calendar = .current) {
         self.defaults = defaults
         self.calendar = calendar
+        welcomeMessage = WelcomeMessage.all.randomElement()
+            ?? "Ready for your Georgian moment?"
 
         let now = Date()
         if defaults.integer(forKey: Keys.dataVersion) < Self.currentDataVersion {
@@ -62,6 +67,7 @@ final class LearningStore: ObservableObject {
         xp = defaults.integer(forKey: Keys.xp)
         streak = defaults.integer(forKey: Keys.streak)
         endlessBest = defaults.integer(forKey: Keys.endlessBest)
+        masteredWordIDs = Set(defaults.array(forKey: Keys.masteredWordIDs) as? [Int] ?? [])
         activityDates = defaults.array(forKey: Keys.activityDates) as? [Date] ?? []
 
         let progressDate = defaults.object(forKey: Keys.dailyProgressDate) as? Date
@@ -83,6 +89,10 @@ final class LearningStore: ObservableObject {
     }
 
     var isEndlessUnlocked: Bool {
+        isPathComplete
+    }
+
+    var isWordPracticeUnlocked: Bool {
         isPathComplete
     }
 
@@ -127,6 +137,12 @@ final class LearningStore: ObservableObject {
         } else {
             persist()
         }
+    }
+
+    func completeWord(_ word: GeorgianWord) {
+        guard isWordPracticeUnlocked else { return }
+        masteredWordIDs.insert(word.id)
+        registerActivity(earnedXP: 5)
     }
 
     func refreshForCurrentDay(now: Date = Date()) {
@@ -186,6 +202,7 @@ final class LearningStore: ObservableObject {
         defaults.set(streak, forKey: Keys.streak)
         defaults.set(dailyProgress, forKey: Keys.dailyProgress)
         defaults.set(endlessBest, forKey: Keys.endlessBest)
+        defaults.set(Array(masteredWordIDs), forKey: Keys.masteredWordIDs)
         defaults.set(activityDates, forKey: Keys.activityDates)
         defaults.set(learningStartedAt, forKey: Keys.learningStartedAt)
         syncStreakToWidget()

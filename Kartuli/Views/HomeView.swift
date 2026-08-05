@@ -4,6 +4,7 @@ struct HomeView: View {
     @EnvironmentObject private var store: LearningStore
     @AppStorage("profileAvatar") private var selectedAvatarID = ProfileAvatar.khinkali.rawValue
     @State private var isEndlessPresented = false
+    @State private var isWordPracticePresented = false
 
     private var selectedAvatar: ProfileAvatar {
         ProfileAvatar(rawValue: selectedAvatarID) ?? .khinkali
@@ -19,7 +20,7 @@ struct HomeView: View {
                         hero
                         stats
                         if store.isEndlessUnlocked {
-                            endlessMode
+                            practiceModes
                         } else {
                             nextUp
                         }
@@ -31,6 +32,9 @@ struct HomeView: View {
             .toolbar(.hidden, for: .navigationBar)
             .fullScreenCover(isPresented: $isEndlessPresented) {
                 EndlessPracticeView()
+            }
+            .fullScreenCover(isPresented: $isWordPracticePresented) {
+                WordPracticeView()
             }
         }
     }
@@ -60,20 +64,22 @@ struct HomeView: View {
                     Text("\(store.dailyProgress)/\(store.streakXPThreshold) XP")
                         .font(.caption.bold()).foregroundStyle(.white.opacity(0.8))
                 }
-                Text("Ready for your\nGeorgian moment?")
+                Text(store.welcomeMessage)
                     .font(.system(size: 29, weight: .heavy, design: .rounded))
                     .foregroundStyle(.white)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.82)
                 ProgressView(value: Double(store.dailyProgress), total: Double(store.streakXPThreshold))
                     .tint(AppTheme.yellow).background(.white.opacity(0.2)).clipShape(.capsule)
                 Button {
                     if store.isEndlessUnlocked {
-                        isEndlessPresented = true
+                        isWordPracticePresented = true
                     } else {
                         store.isLessonPresented = true
                     }
                 } label: {
                     HStack {
-                        Text(store.isEndlessUnlocked ? "Start endless mode" : "Continue lesson")
+                        Text(store.isEndlessUnlocked ? "Build your first words" : "Continue lesson")
                         Spacer()
                         Image(systemName: "arrow.right")
                     }
@@ -102,7 +108,7 @@ struct HomeView: View {
             HStack {
                 Text("Next up").font(.title3.bold()).foregroundStyle(AppTheme.ink)
                 Spacer()
-                Button("View path") { store.selectedTab = 1 }.font(.subheadline.bold()).foregroundStyle(AppTheme.coral)
+                Button("View path") { store.selectedTab = 2 }.font(.subheadline.bold()).foregroundStyle(AppTheme.coral)
             }
             GlassCard {
                 HStack(spacing: 16) {
@@ -122,7 +128,89 @@ struct HomeView: View {
                 .onTapGesture { store.isLessonPresented = true }
             }
             lockedEndlessMode
+            lockedWordPractice
         }
+    }
+
+    private var lockedWordPractice: some View {
+        HStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.coral.opacity(0.12))
+                    .frame(width: 62, height: 62)
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 23, weight: .bold))
+                    .foregroundStyle(AppTheme.coral)
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text("FIRST WORDS")
+                    .font(.caption2.bold())
+                    .tracking(1.1)
+                    .foregroundStyle(AppTheme.coral)
+                Text("Your next learning step")
+                    .font(.headline.bold())
+                    .foregroundStyle(AppTheme.ink)
+                Text("Finish the alphabet, then start reading")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.secondary)
+            }
+            Spacer()
+            Image(systemName: "textformat.abc")
+                .font(.system(size: 24, weight: .bold))
+                .foregroundStyle(AppTheme.secondary.opacity(0.65))
+        }
+        .padding(18)
+        .glassEffect(.regular, in: .rect(cornerRadius: 27))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("First Words. Finish the alphabet, then start reading.")
+    }
+
+    private var practiceModes: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Keep learning")
+                .font(.title3.bold())
+                .foregroundStyle(AppTheme.ink)
+            wordPracticeMode
+            endlessMode
+        }
+    }
+
+    private var wordPracticeMode: some View {
+        Button { isWordPracticePresented = true } label: {
+            HStack(spacing: 16) {
+                ZStack {
+                    Circle().fill(.white.opacity(0.18)).frame(width: 62, height: 62)
+                    Image(systemName: "textformat.abc")
+                        .font(.system(size: 27, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("FIRST WORDS")
+                        .font(.caption2.bold())
+                        .tracking(1.1)
+                        .foregroundStyle(AppTheme.yellow)
+                    Text("Build words from letters")
+                        .font(.title3.bold())
+                        .foregroundStyle(.white)
+                    Text("\(store.masteredWordIDs.count) of \(GeorgianWord.all.count) words learned")
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.78))
+                }
+                Spacer()
+                Image(systemName: "arrow.right")
+                    .foregroundStyle(AppTheme.onLightSurface)
+                    .padding(13)
+                    .background(.white, in: Circle())
+            }
+            .padding(18)
+            .background(
+                LinearGradient(colors: [AppTheme.coral, Color(red: 0.95, green: 0.44, blue: 0.30)], startPoint: .topLeading, endPoint: .bottomTrailing),
+                in: RoundedRectangle(cornerRadius: 27, style: .continuous)
+            )
+            .shadow(color: AppTheme.coral.opacity(0.20), radius: 16, y: 8)
+            .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
+        }
+        .buttonStyle(.plain)
     }
 
     private var lockedEndlessMode: some View {
@@ -195,6 +283,7 @@ struct HomeView: View {
                 in: RoundedRectangle(cornerRadius: 27, style: .continuous)
             )
             .shadow(color: AppTheme.violet.opacity(0.22), radius: 16, y: 8)
+            .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
         }
         .buttonStyle(.plain)
     }

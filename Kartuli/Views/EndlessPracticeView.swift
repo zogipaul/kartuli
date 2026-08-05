@@ -127,7 +127,11 @@ struct EndlessPracticeView: View {
                         .frame(maxWidth: .infinity).frame(height: question.kind == .glyphToSound ? 92 : 124)
                         .glassEffect(optionGlass(option), in: .rect(cornerRadius: 27))
                         .overlay(RoundedRectangle(cornerRadius: 27).stroke(optionColor(option).opacity(isHighlighted(option) ? 0.65 : 0), lineWidth: 3))
+                        .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
                 }
+                .frame(maxWidth: .infinity)
+                .frame(height: question.kind == .glyphToSound ? 92 : 124)
+                .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
                 .buttonStyle(.plain)
             }
         }

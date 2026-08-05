@@ -144,7 +144,7 @@ struct LessonView: View {
             Text("Lesson complete!").font(.system(size: 34, weight: .heavy, design: .rounded)).foregroundStyle(AppTheme.ink)
             Text("You added \(letters.map(\.glyph).joined(separator: "  ")) to your alphabet.").multilineTextAlignment(.center).foregroundStyle(AppTheme.secondary)
             if didUnlockEndless {
-                Label("Yeah — Endless Mode unlocked!", systemImage: "infinity.circle.fill")
+                Label("Endless Mode + First Words unlocked!", systemImage: "sparkles")
                     .font(.headline.bold())
                     .foregroundStyle(AppTheme.violet)
                     .padding(.horizontal, 18)
