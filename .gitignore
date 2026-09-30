@@ -3,3 +3,5 @@ DerivedData/
 *.xcuserstate
 xcuserdata/
 
+# Keep App Review recordings local.
+/Kartuli-App-Review-*.mov
