@@ -152,6 +152,7 @@ struct LearnPathView: View {
 
 struct AlphabetPathSection: View {
     @EnvironmentObject private var store: LearningStore
+    @State private var isCompletedPathExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -165,6 +166,30 @@ struct AlphabetPathSection: View {
                     .foregroundStyle(AppTheme.secondary)
             }
 
+            if store.isPathComplete {
+                DisclosureGroup(isExpanded: $isCompletedPathExpanded) {
+                    units.padding(.top, 12)
+                } label: {
+                    Label("All 33 letters learned", systemImage: "checkmark.circle.fill")
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.ink)
+                        .padding(.vertical, 8)
+                }
+                .tint(AppTheme.violet)
+                .padding(18)
+                .glassEffect(.regular, in: .rect(cornerRadius: 26))
+                .accessibilityIdentifier("completedAlphabetPath")
+            } else {
+                units
+            }
+        }
+        .onChange(of: store.isPathComplete) { _, _ in
+            isCompletedPathExpanded = false
+        }
+    }
+
+    private var units: some View {
+        VStack(spacing: 12) {
             ForEach(LearningUnit.all) { unit in
                 unitCard(unit)
             }

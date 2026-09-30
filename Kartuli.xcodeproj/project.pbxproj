@@ -6,24 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXFileReference section */
-		A00000000000000000000001 /* Kartuli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Kartuli.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B00000000000000000000001 /* KartuliWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = KartuliWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-/* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		A00000000000000000000002 /* Kartuli */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Kartuli;
-			sourceTree = "<group>";
-		};
-		B00000000000000000000002 /* KartuliWidget */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = KartuliWidget;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXBuildFile section */
 		B00000000000000000000003 /* KartuliWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B00000000000000000000001 /* KartuliWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -51,6 +33,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A00000000000000000000001 /* Kartuli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Kartuli.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00000000000000000000001 /* KartuliWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = KartuliWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A00000000000000000000002 /* Kartuli */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Kartuli;
+			sourceTree = "<group>";
+		};
+		B00000000000000000000002 /* KartuliWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KartuliWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A00000000000000000000005 /* Frameworks */ = {
@@ -302,9 +302,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_ENTITLEMENTS = Kartuli/Kartuli.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = XPBXXT8W37;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -316,7 +316,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.kartuli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -330,9 +330,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_ENTITLEMENTS = Kartuli/Kartuli.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = XPBXXT8W37;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -344,7 +344,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.kartuli;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

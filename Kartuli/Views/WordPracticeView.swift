@@ -16,6 +16,9 @@ struct WordPracticeView: View {
     @State private var isChecked = false
     @State private var correct = 0
     @State private var showSummary = false
+    @State private var isStudying = true
+    @ScaledMetric(relativeTo: .largeTitle) private var studyWordSize = 40
+    @ScaledMetric(relativeTo: .title) private var feedbackWordSize = 32
 
     private var word: GeorgianWord { words[wordIndex] }
     private var assembledWord: String { selectedTiles.map(\.letter).joined() }
@@ -46,22 +49,96 @@ struct WordPracticeView: View {
     }
 
     private var practice: some View {
-        VStack(spacing: 22) {
-            HStack(spacing: 14) {
-                Button { showSummary = true } label: {
-                    Image(systemName: "xmark")
-                        .font(.headline)
-                        .foregroundStyle(AppTheme.secondary)
-                        .frame(width: 42, height: 42)
-                        .glassEffect(.regular, in: .circle)
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 22) {
+                    header.id("wordTop")
+                    if isStudying {
+                        discovery
+                    } else {
+                        exercise
+                    }
                 }
-                ProgressView(value: Double(wordIndex + 1), total: Double(words.count))
-                    .tint(AppTheme.coral)
-                Text("\(wordIndex + 1)/\(words.count)")
-                    .font(.caption.bold())
+                .padding(22)
+            }
+            .onChange(of: isStudying) { _, _ in
+                proxy.scrollTo("wordTop", anchor: .top)
+            }
+            .onChange(of: isChecked) { _, checked in
+                if checked {
+                    proxy.scrollTo("wordFeedback", anchor: .bottom)
+                }
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
+            Button(isStudying ? "Build this word" : (isChecked ? (wordIndex + 1 == words.count ? "See results" : "Next word") : "Check word")) {
+                if isStudying {
+                    isStudying = false
+                } else {
+                    handleAction()
+                }
+            }
+            .buttonStyle(PrimaryButtonStyle(color: isStudying || canCheck ? AppTheme.coral : .gray))
+            .disabled(!isStudying && !canCheck)
+            .padding(22)
+            .background(AppTheme.canvas)
+        }
+    }
+
+    private var header: some View {
+        HStack(spacing: 14) {
+            Button { showSummary = true } label: {
+                Image(systemName: "xmark")
+                    .font(.headline)
                     .foregroundStyle(AppTheme.secondary)
+                    .frame(width: 42, height: 42)
+                    .glassEffect(.regular, in: .circle)
+            }
+            .accessibilityLabel("End word practice")
+            ProgressView(value: Double(wordIndex + 1), total: Double(words.count))
+                .tint(AppTheme.coral)
+            Text("\(wordIndex + 1)/\(words.count)")
+                .font(.caption.bold())
+                .foregroundStyle(AppTheme.secondary)
+        }
+    }
+
+    private var discovery: some View {
+        VStack(spacing: 24) {
+            Text("MEET A WORD")
+                .font(.caption.bold())
+                .tracking(1.2)
+                .foregroundStyle(AppTheme.violet)
+
+            GlassCard {
+                VStack(spacing: 16) {
+                    Text(word.text)
+                        .font(.system(size: studyWordSize, weight: .bold))
+                        .foregroundStyle(AppTheme.violet)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text(word.transliteration)
+                        .font(.title3)
+                        .foregroundStyle(AppTheme.secondary)
+                    Text(word.translation.capitalized)
+                        .font(.title2.bold())
+                        .foregroundStyle(AppTheme.ink)
+                }
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 24)
             }
 
+            Text("Look at the word and say it aloud. Then tap the letters to build it yourself.")
+                .font(.body)
+                .foregroundStyle(AppTheme.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.top, 8)
+        .accessibilityIdentifier("wordDiscovery")
+    }
+
+    private var exercise: some View {
+        VStack(spacing: 22) {
             VStack(spacing: 7) {
                 Text("BUILD YOUR FIRST WORDS")
                     .font(.caption.bold())
@@ -73,7 +150,19 @@ struct WordPracticeView: View {
                 Text("Tap the letters in the right order")
                     .foregroundStyle(AppTheme.secondary)
             }
+            .multilineTextAlignment(.center)
             .padding(.top, 8)
+
+            if !isChecked {
+                Button {
+                    isStudying = true
+                } label: {
+                    Label("Show word again", systemImage: "eye")
+                        .font(.subheadline.bold())
+                        .padding(.vertical, 8)
+                }
+                .foregroundStyle(AppTheme.violet)
+            }
 
             LazyVGrid(columns: answerColumns, spacing: 6) {
                 ForEach(word.letters.indices, id: \.self) { index in
@@ -104,7 +193,7 @@ struct WordPracticeView: View {
                     .frame(height: 64)
                     .contentShape(RoundedRectangle(cornerRadius: 21, style: .continuous))
                     .buttonStyle(.plain)
-                    .disabled(selectedTiles.contains(tile))
+                    .disabled(isChecked || selectedTiles.contains(tile))
                 }
             }
 
@@ -127,32 +216,29 @@ struct WordPracticeView: View {
             .foregroundStyle(AppTheme.secondary)
 
             if isChecked {
-                HStack(spacing: 12) {
+                HStack(alignment: .top, spacing: 12) {
                     Image(systemName: isCorrect ? "checkmark.circle.fill" : "lightbulb.fill")
                         .font(.title2)
                         .foregroundStyle(isCorrect ? AppTheme.mint : AppTheme.yellow)
-                    VStack(alignment: .leading, spacing: 2) {
+                    VStack(alignment: .leading, spacing: 8) {
                         Text(isCorrect ? "Perfect — you built it!" : "Almost — remember this shape")
                             .font(.headline)
                             .foregroundStyle(AppTheme.ink)
-                        Text("\(word.text) · \(word.transliteration) · \(word.translation)")
-                            .font(.caption)
+                        Text(word.text)
+                            .font(.system(size: feedbackWordSize, weight: .bold))
+                            .foregroundStyle(AppTheme.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text("\(word.transliteration) · \(word.translation)")
+                            .font(.subheadline)
                             .foregroundStyle(AppTheme.secondary)
                     }
-                    Spacer()
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(16)
                 .glassEffect(.regular.tint((isCorrect ? AppTheme.mint : AppTheme.yellow).opacity(0.10)), in: .rect(cornerRadius: 22))
+                .id("wordFeedback")
             }
-
-            Spacer(minLength: 0)
-            Button(isChecked ? (wordIndex + 1 == words.count ? "See results" : "Next word") : "Check word") {
-                handleAction()
-            }
-            .buttonStyle(PrimaryButtonStyle(color: canCheck ? AppTheme.coral : .gray))
-            .disabled(!canCheck)
         }
-        .padding(22)
     }
 
     private var canCheck: Bool {
@@ -171,6 +257,7 @@ struct WordPracticeView: View {
             prepareTiles()
             selectedTiles.removeAll()
             isChecked = false
+            isStudying = true
         } else {
             withAnimation(.spring(response: 0.35)) { showSummary = true }
         }
@@ -230,6 +317,7 @@ struct WordPracticeView: View {
         wordIndex = 0
         selectedTiles.removeAll()
         isChecked = false
+        isStudying = true
         correct = 0
         prepareTiles()
     }
