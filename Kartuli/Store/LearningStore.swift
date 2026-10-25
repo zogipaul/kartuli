@@ -11,6 +11,7 @@ final class LearningStore: ObservableObject {
     @Published private(set) var learnedLetterIDs: Set<Int>
     @Published private(set) var xp: Int
     @Published private(set) var streak: Int
+    @Published private(set) var longestStreak: Int
     @Published private(set) var dailyProgress: Int
     @Published private(set) var endlessBest: Int
     @Published private(set) var masteredWordIDs: Set<Int>
@@ -30,6 +31,7 @@ final class LearningStore: ObservableObject {
         static let learnedLetterIDs = "learnedLetterIDs"
         static let xp = "xp"
         static let streak = "streak"
+        static let longestStreak = "longestStreak"
         static let dailyProgress = "dailyProgress"
         static let dailyProgressDate = "dailyProgressDate"
         static let endlessBest = "endlessBest"
@@ -65,10 +67,18 @@ final class LearningStore: ObservableObject {
         learningStartedAt = defaults.object(forKey: Keys.learningStartedAt) as? Date ?? now
         learnedLetterIDs = Set(defaults.array(forKey: Keys.learnedLetterIDs) as? [Int] ?? [])
         xp = defaults.integer(forKey: Keys.xp)
-        streak = defaults.integer(forKey: Keys.streak)
+        let savedStreak = defaults.integer(forKey: Keys.streak)
+        streak = savedStreak
         endlessBest = defaults.integer(forKey: Keys.endlessBest)
         masteredWordIDs = Set(defaults.array(forKey: Keys.masteredWordIDs) as? [Int] ?? [])
-        activityDates = defaults.array(forKey: Keys.activityDates) as? [Date] ?? []
+        let savedActivityDates = defaults.array(forKey: Keys.activityDates) as? [Date] ?? []
+        activityDates = savedActivityDates
+        // Recover existing records before an expired current streak is reset.
+        longestStreak = max(
+            defaults.integer(forKey: Keys.longestStreak),
+            savedStreak,
+            Self.longestRun(in: savedActivityDates, calendar: calendar)
+        )
 
         let progressDate = defaults.object(forKey: Keys.dailyProgressDate) as? Date
         dailyProgress = progressDate.map(calendar.isDateInToday) == true
@@ -189,6 +199,7 @@ final class LearningStore: ObservableObject {
             } else {
                 streak = 1
             }
+            longestStreak = max(longestStreak, streak)
             activityDates.append(calendar.startOfDay(for: now))
             ReminderManager.cancelTodayReminder(now: now)
         }
@@ -200,12 +211,32 @@ final class LearningStore: ObservableObject {
         defaults.set(Array(learnedLetterIDs), forKey: Keys.learnedLetterIDs)
         defaults.set(xp, forKey: Keys.xp)
         defaults.set(streak, forKey: Keys.streak)
+        defaults.set(longestStreak, forKey: Keys.longestStreak)
         defaults.set(dailyProgress, forKey: Keys.dailyProgress)
         defaults.set(endlessBest, forKey: Keys.endlessBest)
         defaults.set(Array(masteredWordIDs), forKey: Keys.masteredWordIDs)
         defaults.set(activityDates, forKey: Keys.activityDates)
         defaults.set(learningStartedAt, forKey: Keys.learningStartedAt)
         syncStreakToWidget()
+    }
+
+    private static func longestRun(in dates: [Date], calendar: Calendar) -> Int {
+        let days = Set(dates.map { calendar.startOfDay(for: $0) }).sorted()
+        var longest = 0
+        var current = 0
+        var previous: Date?
+
+        for day in days {
+            if let previous,
+               calendar.date(byAdding: .day, value: 1, to: previous) == day {
+                current += 1
+            } else {
+                current = 1
+            }
+            longest = max(longest, current)
+            previous = day
+        }
+        return longest
     }
 
     private func syncStreakToWidget() {
@@ -218,6 +249,7 @@ final class LearningStore: ObservableObject {
             Keys.learnedLetterIDs,
             Keys.xp,
             Keys.streak,
+            Keys.longestStreak,
             Keys.dailyProgress,
             Keys.dailyProgressDate,
             Keys.endlessBest,

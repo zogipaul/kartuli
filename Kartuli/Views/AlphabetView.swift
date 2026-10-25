@@ -5,7 +5,6 @@ struct AlphabetView: View {
     @State private var query = ""
     @State private var selectedLetter: GeorgianLetter?
     @State private var isEndlessPresented = false
-    @State private var isWordPracticePresented = false
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 11), count: 4)
     private var filtered: [GeorgianLetter] {
@@ -24,7 +23,7 @@ struct AlphabetView: View {
                             Text("33 letters · Mkhedruli script").foregroundStyle(AppTheme.secondary)
                         }
                         AlphabetPathSection()
-                        practiceCards
+                        endlessCard
                         LazyVGrid(columns: columns, spacing: 11) {
                             ForEach(filtered) { letter in
                                 let learned = store.learnedLetterIDs.contains(letter.id)
@@ -50,48 +49,8 @@ struct AlphabetView: View {
             .searchable(text: $query, prompt: "Letter, name or sound")
             .sheet(item: $selectedLetter) { LetterDetailView(letter: $0) }
             .fullScreenCover(isPresented: $isEndlessPresented) { EndlessPracticeView() }
-            .fullScreenCover(isPresented: $isWordPracticePresented) { WordPracticeView() }
             .toolbar(.hidden, for: .navigationBar)
         }
-    }
-
-    private var practiceCards: some View {
-        VStack(spacing: 12) {
-            wordPracticeCard
-            endlessCard
-        }
-    }
-
-    private var wordPracticeCard: some View {
-        Button {
-            if store.isWordPracticeUnlocked {
-                isWordPracticePresented = true
-            }
-        } label: {
-            HStack(spacing: 16) {
-                ZStack {
-                    Circle().fill(.white.opacity(0.18)).frame(width: 64, height: 64)
-                    Image(systemName: store.isWordPracticeUnlocked ? "textformat.abc" : "lock.fill")
-                        .font(.system(size: 27, weight: .bold)).foregroundStyle(.white)
-                }
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(store.isWordPracticeUnlocked ? "FIRST WORDS" : "NEXT STEP")
-                        .font(.caption2.bold()).tracking(1.1).foregroundStyle(AppTheme.yellow)
-                    Text(store.isWordPracticeUnlocked ? "Build words from letters" : "Complete your alphabet path")
-                        .font(.headline.bold()).foregroundStyle(.white)
-                    Text(store.isWordPracticeUnlocked ? "\(store.masteredWordIDs.count) of \(GeorgianWord.all.count) words learned" : "Reading unlocks with all 33 letters")
-                        .font(.caption).foregroundStyle(.white.opacity(0.75))
-                }
-                Spacer()
-                Image(systemName: store.isWordPracticeUnlocked ? "arrow.right" : "flag.checkered")
-                    .foregroundStyle(AppTheme.onLightSurface).padding(13).background(.white, in: Circle())
-            }
-            .padding(18)
-            .background(LinearGradient(colors: [AppTheme.coral, Color(red: 0.95, green: 0.44, blue: 0.30)], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 27, style: .continuous))
-            .shadow(color: AppTheme.coral.opacity(0.20), radius: 16, y: 8)
-            .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
-        }
-        .buttonStyle(.plain)
     }
 
     private var endlessCard: some View {

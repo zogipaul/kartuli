@@ -55,8 +55,9 @@ struct ProfileView: View {
                         }
                         HStack(spacing: 12) {
                             achievement("flame.fill", "Current streak", "\(store.streak) \(store.streak == 1 ? "day" : "days")", AppTheme.coral)
-                            achievement("character.book.closed.fill", "Letters learned", "\(store.learnedLetterIDs.count) of \(GeorgianLetter.all.count)", AppTheme.violet)
+                            achievement("trophy.fill", "Longest streak", "\(store.longestStreak) \(store.longestStreak == 1 ? "day" : "days")", AppTheme.yellow)
                         }
+                        achievement("character.book.closed.fill", "Letters learned", "\(store.learnedLetterIDs.count) of \(GeorgianLetter.all.count)", AppTheme.violet)
                         VStack(spacing: 0) {
                             HStack(spacing: 13) {
                                 Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")

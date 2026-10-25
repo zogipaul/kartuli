@@ -30,6 +30,12 @@ The visual direction combines a warm Georgian red with lavender and mint,
 oversized typography, soft gradients, friendly microcopy, and native Liquid
 Glass surfaces. It uses only SwiftUI and SF Symbols.
 
+On a fresh launch, a short SwiftUI intro brings the app-icon artwork into an orbit
+of Georgian letters, followed by a light sweep and a soft transition into Today.
+Tap anywhere to skip. Reduce Motion uses a brief static treatment, and returning
+from the background does not replay the intro. The native launch screen shares
+the intro's background color.
+
 ## Run
 
 Open `Kartuli.xcodeproj` in Xcode 26 and run the `Kartuli` scheme on an iOS 26
