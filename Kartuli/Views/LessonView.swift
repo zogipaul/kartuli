@@ -1,7 +1,14 @@
 import SwiftUI
 
 struct LessonView: View {
-    let letters: [GeorgianLetter]
+    // Freeze the presented lesson: awarding XP updates store.nextLetters while
+    // this sheet is still showing its completion screen.
+    @State private var letters: [GeorgianLetter]
+    @State private var optionsByLetterID: [Int: [GeorgianLetter]] = [:]
+
+    init(letters: [GeorgianLetter]) {
+        _letters = State(initialValue: letters)
+    }
     @EnvironmentObject private var store: LearningStore
     @Environment(\.dismiss) private var dismiss
     @State private var step = 0
@@ -17,23 +24,35 @@ struct LessonView: View {
     var body: some View {
         ZStack {
             AppBackground()
-            if finished { completion }
+            if letters.isEmpty {
+                Button("Back to Today") { dismiss() }.buttonStyle(PrimaryButtonStyle()).padding(24)
+            } else if finished { completion }
             else {
-                VStack(spacing: 24) {
-                    topBar
-                    if isQuiz { quiz } else { discovery }
-                    Spacer()
-                    actionButton
+                ScrollView {
+                    VStack(spacing: 24) {
+                        topBar
+                        if isQuiz { quiz } else { discovery }
+                    }
+                    .padding(22)
                 }
-                .padding(22)
+                .id(step)
+                .safeAreaInset(edge: .bottom) {
+                    actionButton.padding(22).background(AppTheme.canvas)
+                }
             }
         }
         .interactiveDismissDisabled(!finished)
+        .onAppear {
+            for letter in letters where optionsByLetterID[letter.id] == nil {
+                optionsByLetterID[letter.id] = GeorgianLetter.quizOptions(for: letter)
+            }
+        }
     }
 
     private var topBar: some View {
         HStack(spacing: 14) {
-            Button { dismiss() } label: { Image(systemName: "xmark").font(.headline).foregroundStyle(AppTheme.secondary).frame(width: 40, height: 40).glassEffect(.regular, in: .circle) }
+            Button { dismiss() } label: { Image(systemName: "xmark").font(.system(size: 17, weight: .semibold)).foregroundStyle(AppTheme.secondary).frame(width: 44, height: 44).glassEffect(.regular, in: .circle) }
+            .accessibilityLabel("Close lesson")
             ProgressView(value: Double(step + 1), total: Double(totalSteps)).tint(AppTheme.coral)
             Text("\(step + 1)/\(totalSteps)").font(.caption.bold()).foregroundStyle(AppTheme.secondary)
         }
@@ -101,9 +120,7 @@ struct LessonView: View {
     }
 
     private var quizOptions: [GeorgianLetter] {
-        let distractors = GeorgianLetter.all.filter { $0.id != activeLetter.id }
-        let picks = [distractors[(activeLetter.id + 5) % distractors.count], distractors[(activeLetter.id + 12) % distractors.count], distractors[(activeLetter.id + 20) % distractors.count]]
-        return ([activeLetter] + picks).sorted { (($0.id * 7 + activeLetter.id) % 13) < (($1.id * 7 + activeLetter.id) % 13) }
+        optionsByLetterID[activeLetter.id] ?? []
     }
 
     private func answerColor(_ option: GeorgianLetter) -> Color {
@@ -135,8 +152,8 @@ struct LessonView: View {
     }
 
     private var completion: some View {
-        VStack(spacing: 24) {
-            Spacer()
+        ScrollView {
+          VStack(spacing: 24) {
             ZStack {
                 Circle().fill(AppTheme.yellow.opacity(0.22)).frame(width: 180, height: 180)
                 Image(systemName: "star.fill").font(.system(size: 82)).foregroundStyle(AppTheme.yellow).symbolEffect(.bounce, value: finished)
@@ -156,8 +173,11 @@ struct LessonView: View {
                 StatCard(icon: "bolt.fill", value: "+30", label: "XP earned", color: AppTheme.yellow)
                 StatCard(icon: "character.book.closed.fill", value: "\(store.learnedLetterIDs.count)", label: "letters known", color: AppTheme.mint)
             }
-            Spacer()
+          }.padding(24)
+        }
+        .safeAreaInset(edge: .bottom) {
             Button("Back to Today") { dismiss() }.buttonStyle(PrimaryButtonStyle())
-        }.padding(24)
+                .padding(24).background(AppTheme.canvas)
+        }
     }
 }

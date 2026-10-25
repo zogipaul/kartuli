@@ -6,12 +6,13 @@ struct LaunchExperienceView: View {
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage("isDarkMode") private var isDarkMode = false
     @State private var isShowingSplash = true
+    @State private var isReadyForInteraction = false
 
     var body: some View {
         ZStack {
             RootView()
-                .allowsHitTesting(!isShowingSplash)
-                .accessibilityHidden(isShowingSplash)
+                .allowsHitTesting(isReadyForInteraction)
+                .accessibilityHidden(!isReadyForInteraction)
 
             if isShowingSplash {
                 SplashScreenView(onFinish: finish)
@@ -24,14 +25,19 @@ struct LaunchExperienceView: View {
             // Returning from an interruption should always reveal the app immediately.
             if phase == .background {
                 isShowingSplash = false
+                isReadyForInteraction = true
             }
         }
     }
 
     private func finish() {
         guard isShowingSplash else { return }
-        withAnimation(.easeOut(duration: reduceMotion ? 0.18 : 0.42)) {
+        withAnimation(.easeOut(duration: reduceMotion ? 0.18 : 0.42), completionCriteria: .removed) {
             isShowingSplash = false
+        } completion: {
+            // The disappearing splash still intercepts touches during its fade.
+            // Expose the app to VoiceOver and UI automation only when it is usable.
+            isReadyForInteraction = true
         }
     }
 }

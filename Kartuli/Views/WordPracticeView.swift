@@ -89,9 +89,9 @@ struct WordPracticeView: View {
         HStack(spacing: 14) {
             Button { showSummary = true } label: {
                 Image(systemName: "xmark")
-                    .font(.headline)
+                    .font(.system(size: 17, weight: .semibold))
                     .foregroundStyle(AppTheme.secondary)
-                    .frame(width: 42, height: 42)
+                    .frame(width: 44, height: 44)
                     .glassEffect(.regular, in: .circle)
             }
             .accessibilityLabel("End word practice")
@@ -264,8 +264,8 @@ struct WordPracticeView: View {
     }
 
     private var summary: some View {
-        VStack(spacing: 24) {
-            Spacer()
+        ScrollView {
+          VStack(spacing: 24) {
             ZStack {
                 Circle().fill(AppTheme.coral.opacity(0.12)).frame(width: 164, height: 164)
                 Image(systemName: "textformat.abc")
@@ -284,7 +284,9 @@ struct WordPracticeView: View {
                 metric("\(correct)/\(words.count)", "this round", AppTheme.mint)
                 metric("\(store.masteredWordIDs.count)/\(GeorgianWord.all.count)", "words learned", AppTheme.violet)
             }
-            Spacer()
+          }.padding(24)
+        }
+        .safeAreaInset(edge: .bottom) {
             VStack(spacing: 12) {
                 Button("Practice more words") {
                     startSession()
@@ -295,9 +297,8 @@ struct WordPracticeView: View {
                     .font(.headline.bold())
                     .foregroundStyle(AppTheme.secondary)
                     .padding(.vertical, 8)
-            }
+            }.padding(24).background(AppTheme.canvas)
         }
-        .padding(24)
     }
 
     private func metric(_ value: String, _ label: String, _ color: Color) -> some View {

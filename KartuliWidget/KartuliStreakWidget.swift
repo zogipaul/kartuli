@@ -2,11 +2,12 @@ import SwiftUI
 import WidgetKit
 
 private enum SharedStreak {
-    static let appGroupID = "group.com.example.kartuli"
-    static let key = "sharedStreak"
-
-    static var value: Int {
-        UserDefaults(suiteName: appGroupID)?.integer(forKey: key) ?? 0
+    static var snapshot: StreakSnapshot {
+        let defaults = UserDefaults(suiteName: StreakSnapshot.appGroupID)
+        return StreakSnapshot(
+            streak: defaults?.integer(forKey: StreakSnapshot.streakKey) ?? 0,
+            lastActivity: defaults?.object(forKey: StreakSnapshot.lastActivityKey) as? Date
+        )
     }
 }
 
@@ -21,13 +22,18 @@ private struct StreakProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (StreakEntry) -> Void) {
-        completion(StreakEntry(date: Date(), streak: context.isPreview ? 7 : SharedStreak.value))
+        completion(StreakEntry(date: Date(), streak: context.isPreview ? 7 : SharedStreak.snapshot.value(at: Date(), calendar: .current)))
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<StreakEntry>) -> Void) {
-        let entry = StreakEntry(date: Date(), streak: SharedStreak.value)
-        let nextRefresh = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? Date()
-        completion(Timeline(entries: [entry], policy: .after(nextRefresh)))
+        let now = Date()
+        let snapshot = SharedStreak.snapshot
+        var entries = [StreakEntry(date: now, streak: snapshot.value(at: now, calendar: .current))]
+        if let expiration = snapshot.expirationDate(calendar: .current), expiration > now {
+            entries.append(StreakEntry(date: expiration, streak: 0))
+        }
+        // Expiry is already in the timeline; new learning activity reloads it.
+        completion(Timeline(entries: entries, policy: .never))
     }
 }
 

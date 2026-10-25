@@ -40,3 +40,26 @@ the intro's background color.
 
 Open `Kartuli.xcodeproj` in Xcode 26 and run the `Kartuli` scheme on an iOS 26
 simulator. No packages or external dependencies are required.
+
+## QA
+
+Run `scripts/qa.sh` with full Xcode installed. It runs the unit and UI suites,
+then builds the app and widget in Release for iOS without signing. Override the
+simulator with `QA_DESTINATION='platform=iOS Simulator,id=<UDID>'` and optionally
+set `QA_DERIVED_DATA` (default: `/tmp/kartuli-local-qa`). Xcode's `Kartuli` shared
+scheme also supports Test directly.
+
+The tests cover XP thresholds, unlocks, persistence, midnight and DST changes,
+widget expiry, redundant writes/reloads, quiz choices, complete lesson flows,
+and practice navigation at the largest accessibility text size. UI fixtures
+use isolated preferences and do not replace normal learning progress. Screenshots
+and timing measurements are retained in the `.xcresult` under DerivedData.
+The history benchmark compares the original linear scan with the indexed lookup
+using 3,651 activity days; this is a stress scenario, not a launch/FPS benchmark.
+
+Verified locally on 2026-10-25: 12 unit tests and 3 UI tests passed, including
+maximum accessibility text size on iPhone 17e / iOS 26.5; the unsigned iOS Release
+build of app and widget passed. The final Debug simulator benchmark on iPhone
+17 Pro / iOS 26.5 took 3,367 ms for 100 original week lookups versus 2.1 ms for
+the indexed implementation with 3,651 activity dates. These are algorithm timings,
+not physical-device frame-rate, battery, or launch-time measurements.

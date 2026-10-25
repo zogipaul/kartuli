@@ -16,6 +16,7 @@ struct LearnPathView: View {
     }
 
     var body: some View {
+        let wordsByCategory = Dictionary(grouping: filteredWords, by: \.category)
         NavigationStack {
             ZStack {
                 AppBackground()
@@ -24,8 +25,7 @@ struct LearnPathView: View {
                         header
                         practiceCard
                         ForEach(GeorgianWord.categories, id: \.self) { category in
-                            let words = filteredWords.filter { $0.category == category }
-                            if !words.isEmpty {
+                            if let words = wordsByCategory[category] {
                                 wordSection(category, words: words)
                             }
                         }
@@ -105,7 +105,7 @@ struct LearnPathView: View {
     }
 
     private func wordSection(_ category: String, words: [GeorgianWord]) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        LazyVStack(alignment: .leading, spacing: 10) {
             Text(category.uppercased())
                 .font(.caption.bold())
                 .tracking(1.1)

@@ -34,14 +34,14 @@ private struct EndlessQuestion {
     static func make(avoiding previousID: Int? = nil) -> EndlessQuestion {
         let available = GeorgianLetter.all.filter { $0.id != previousID }
         let answer = available.randomElement() ?? GeorgianLetter.all[0]
-        let distractors = GeorgianLetter.all.filter { $0.id != answer.id }.shuffled().prefix(3)
-        return EndlessQuestion(answer: answer, options: ([answer] + distractors).shuffled(), kind: EndlessQuestionKind.allCases.randomElement() ?? .soundToGlyph)
+        return EndlessQuestion(answer: answer, options: GeorgianLetter.quizOptions(for: answer), kind: EndlessQuestionKind.allCases.randomElement() ?? .soundToGlyph)
     }
 }
 
 struct EndlessPracticeView: View {
     @EnvironmentObject private var store: LearningStore
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var question = EndlessQuestion.make()
     @State private var selectedID: Int?
     @State private var isChecked = false
@@ -66,7 +66,8 @@ struct EndlessPracticeView: View {
     }
 
     private var practice: some View {
-        VStack(spacing: 22) {
+        ScrollView {
+          VStack(spacing: 22) {
             header
             VStack(spacing: 8) {
                 Text(question.kind.instruction.uppercased())
@@ -87,30 +88,46 @@ struct EndlessPracticeView: View {
 
             options
             feedback
-            Spacer(minLength: 4)
+          }.padding(22)
+        }
+        .id(question.answer.id)
+        .safeAreaInset(edge: .bottom) {
             Button(actionButtonTitle, action: handleAction)
                 .buttonStyle(PrimaryButtonStyle(color: selectedID == nil ? .gray : AppTheme.coral))
                 .disabled(selectedID == nil)
+                .padding(22).background(AppTheme.canvas)
         }
-        .padding(22)
     }
 
     private var header: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
+                Button { showSummary = true } label: {
+                    Image(systemName: "xmark").font(.system(size: 17, weight: .semibold)).foregroundStyle(AppTheme.secondary)
+                        .frame(width: 44, height: 44).glassEffect(.regular, in: .circle)
+                }
+                .accessibilityLabel("End endless practice")
+                VStack(alignment: .leading, spacing: 1) {
+                    Text("ENDLESS MODE").font(.caption2.bold()).tracking(1).foregroundStyle(AppTheme.violet)
+                    Text("Round \(rounds + (isChecked ? 0 : 1))").font(.headline).foregroundStyle(AppTheme.ink)
+                }
+                Spacer(minLength: 0)
+                if !dynamicTypeSize.isAccessibilitySize { sessionMetrics }
+            }
+            if dynamicTypeSize.isAccessibilitySize { sessionMetrics }
+        }
+    }
+
+    private var sessionMetrics: some View {
         HStack(spacing: 12) {
-            Button { showSummary = true } label: {
-                Image(systemName: "xmark").font(.headline).foregroundStyle(AppTheme.secondary)
-                    .frame(width: 42, height: 42).glassEffect(.regular, in: .circle)
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text("ENDLESS MODE").font(.caption2.bold()).tracking(1).foregroundStyle(AppTheme.violet)
-                Text("Round \(rounds + 1)").font(.headline).foregroundStyle(AppTheme.ink)
-            }
-            Spacer()
             Label("\(combo)", systemImage: "bolt.fill")
                 .font(.headline.bold()).foregroundStyle(combo > 1 ? AppTheme.yellow : AppTheme.secondary)
                 .padding(.horizontal, 14).padding(.vertical, 10)
                 .glassEffect(.regular, in: .capsule)
+                .accessibilityLabel("Combo: \(combo)")
             Text("\(accuracy)%").font(.headline.bold()).foregroundStyle(AppTheme.mint)
+                .fixedSize()
+                .accessibilityLabel("Accuracy: \(accuracy) percent")
         }
     }
 
@@ -207,8 +224,8 @@ struct EndlessPracticeView: View {
     }
 
     private var summary: some View {
-        VStack(spacing: 24) {
-            Spacer()
+        ScrollView {
+          VStack(spacing: 24) {
             ZStack {
                 Circle().fill(AppTheme.violet.opacity(0.12)).frame(width: 164, height: 164)
                 Image(systemName: "infinity").font(.system(size: 72, weight: .bold)).foregroundStyle(AppTheme.violet)
@@ -227,7 +244,9 @@ struct EndlessPracticeView: View {
             Label("+\(correct * 2) XP earned · 30 XP secures your streak", systemImage: "bolt.fill")
                 .font(.subheadline.bold())
                 .foregroundStyle(AppTheme.violet)
-            Spacer()
+          }.padding(24)
+        }
+        .safeAreaInset(edge: .bottom) {
             VStack(spacing: 12) {
                 Button("Keep practicing") { withAnimation { showSummary = false } }
                     .buttonStyle(PrimaryButtonStyle(color: AppTheme.violet))
@@ -236,9 +255,8 @@ struct EndlessPracticeView: View {
                     dismiss()
                 }
                 .font(.headline.bold()).foregroundStyle(AppTheme.secondary).padding(.vertical, 8)
-            }
+            }.padding(24).background(AppTheme.canvas)
         }
-        .padding(24)
     }
 
     private func metric(_ value: String, _ label: String, _ color: Color) -> some View {

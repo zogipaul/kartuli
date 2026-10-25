@@ -18,6 +18,20 @@
 			remoteGlobalIDString = B00000000000000000000008;
 			remoteInfo = KartuliWidget;
 		};
+		D00000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000009 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A00000000000000000000008;
+			remoteInfo = Kartuli;
+		};
+		E00000000000000000000002 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000009 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A00000000000000000000008;
+			remoteInfo = Kartuli;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +51,8 @@
 /* Begin PBXFileReference section */
 		A00000000000000000000001 /* Kartuli.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = Kartuli.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B00000000000000000000001 /* KartuliWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = KartuliWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D00000000000000000000001 /* KartuliTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KartuliTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E00000000000000000000001 /* KartuliUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = KartuliUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -48,6 +64,21 @@
 		B00000000000000000000002 /* KartuliWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = KartuliWidget;
+			sourceTree = "<group>";
+		};
+		C00000000000000000000001 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		C00000000000000000000002 /* KartuliTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KartuliTests;
+			sourceTree = "<group>";
+		};
+		C00000000000000000000003 /* KartuliUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KartuliUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -67,6 +98,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D00000000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E00000000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -75,6 +120,9 @@
 			children = (
 				A00000000000000000000002 /* Kartuli */,
 				B00000000000000000000002 /* KartuliWidget */,
+				C00000000000000000000001 /* Shared */,
+				C00000000000000000000002 /* KartuliTests */,
+				C00000000000000000000003 /* KartuliUITests */,
 				A00000000000000000000004 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -84,6 +132,8 @@
 			children = (
 				A00000000000000000000001 /* Kartuli.app */,
 				B00000000000000000000001 /* KartuliWidget.appex */,
+				E00000000000000000000001 /* KartuliUITests.xctest */,
+				D00000000000000000000001 /* KartuliTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,6 +157,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				A00000000000000000000002 /* Kartuli */,
+				C00000000000000000000001 /* Shared */,
 			);
 			name = Kartuli;
 			packageProductDependencies = (
@@ -129,6 +180,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				B00000000000000000000002 /* KartuliWidget */,
+				C00000000000000000000001 /* Shared */,
 			);
 			name = KartuliWidget;
 			packageProductDependencies = (
@@ -136,6 +188,48 @@
 			productName = KartuliWidget;
 			productReference = B00000000000000000000001 /* KartuliWidget.appex */;
 			productType = "com.apple.product-type.app-extension";
+		};
+		D00000000000000000000008 /* KartuliTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D00000000000000000000009 /* Build configuration list for PBXNativeTarget "KartuliTests" */;
+			buildPhases = (
+				D00000000000000000000004 /* Sources */,
+				D00000000000000000000005 /* Frameworks */,
+				D00000000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D00000000000000000000003 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C00000000000000000000002 /* KartuliTests */,
+			);
+			name = KartuliTests;
+			productName = KartuliTests;
+			productReference = D00000000000000000000001 /* KartuliTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E00000000000000000000008 /* KartuliUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E00000000000000000000009 /* Build configuration list for PBXNativeTarget "KartuliUITests" */;
+			buildPhases = (
+				E00000000000000000000004 /* Sources */,
+				E00000000000000000000005 /* Frameworks */,
+				E00000000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E00000000000000000000003 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C00000000000000000000003 /* KartuliUITests */,
+			);
+			name = KartuliUITests;
+			productName = KartuliUITests;
+			productReference = E00000000000000000000001 /* KartuliUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -169,8 +263,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				E00000000000000000000008 /* KartuliUITests */,
 				A00000000000000000000008 /* Kartuli */,
 				B00000000000000000000008 /* KartuliWidget */,
+				D00000000000000000000008 /* KartuliTests */,
 			);
 		};
 /* End PBXProject section */
@@ -184,6 +280,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B00000000000000000000011 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E00000000000000000000006 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -207,6 +317,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D00000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E00000000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -214,6 +338,16 @@
 			isa = PBXTargetDependency;
 			target = B00000000000000000000008 /* KartuliWidget */;
 			targetProxy = B00000000000000000000004 /* PBXContainerItemProxy */;
+		};
+		D00000000000000000000003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A00000000000000000000008 /* Kartuli */;
+			targetProxy = D00000000000000000000002 /* PBXContainerItemProxy */;
+		};
+		E00000000000000000000003 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A00000000000000000000008 /* Kartuli */;
+			targetProxy = E00000000000000000000002 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -304,7 +438,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kartuli/Kartuli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = XPBXXT8W37;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -332,7 +466,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Kartuli/Kartuli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = XPBXXT8W37;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -369,7 +503,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.kartuli.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -395,13 +529,75 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.kartuli.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		D0000000000000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XPBXXT8W37;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.KartuliTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kartuli.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kartuli";
+			};
+			name = Debug;
+		};
+		D0000000000000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XPBXXT8W37;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.KartuliTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kartuli.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kartuli";
+			};
+			name = Release;
+		};
+		E0000000000000000000000A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XPBXXT8W37;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.KartuliUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Kartuli;
+			};
+			name = Debug;
+		};
+		E0000000000000000000000B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XPBXXT8W37;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.KartuliUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = Kartuli;
 			};
 			name = Release;
 		};
@@ -431,6 +627,24 @@
 			buildConfigurations = (
 				B00000000000000000000012 /* Debug */,
 				B00000000000000000000013 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D00000000000000000000009 /* Build configuration list for PBXNativeTarget "KartuliTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0000000000000000000000A /* Debug */,
+				D0000000000000000000000B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E00000000000000000000009 /* Build configuration list for PBXNativeTarget "KartuliUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E0000000000000000000000A /* Debug */,
+				E0000000000000000000000B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

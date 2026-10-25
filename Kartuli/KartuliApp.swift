@@ -2,19 +2,43 @@ import SwiftUI
 
 @main
 struct KartuliApp: App {
-    @StateObject private var store = LearningStore()
+    @StateObject private var store: LearningStore
+    private let preferences: UserDefaults
+
+    init() {
+        #if DEBUG
+        let testDefaults = QATestConfiguration.defaults
+        let defaults = testDefaults ?? UserDefaults.standard
+        preferences = defaults
+        _store = StateObject(wrappedValue: LearningStore(
+            defaults: defaults,
+            widgetDefaults: testDefaults == nil ? UserDefaults(suiteName: StreakSnapshot.appGroupID) : nil,
+            cancelReminder: { if testDefaults == nil { ReminderManager.cancelTodayReminder(now: $0) } }
+        ))
+        #else
+        preferences = .standard
+        _store = StateObject(wrappedValue: LearningStore())
+        #endif
+    }
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
             LaunchExperienceView()
                 .environmentObject(store)
+                .defaultAppStorage(preferences)
+                .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+                    store.refreshForCurrentDay()
+                }
+                .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in
+                    store.refreshForCurrentDay()
+                }
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
                 store.refreshForCurrentDay()
-                if UserDefaults.standard.bool(forKey: "reminderEnabled") {
-                    let minutes = UserDefaults.standard.integer(forKey: "reminderTimeMinutes")
+                if preferences.bool(forKey: "reminderEnabled") {
+                    let minutes = preferences.integer(forKey: "reminderTimeMinutes")
                     Task {
                         _ = await ReminderManager.setReminder(
                             enabled: true,

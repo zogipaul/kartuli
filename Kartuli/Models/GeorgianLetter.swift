@@ -9,6 +9,11 @@ struct GeorgianLetter: Identifiable, Hashable {
     let translation: String
     let unit: Int
 
+    static func quizOptions(for answer: GeorgianLetter) -> [GeorgianLetter] {
+        let distractors = all.filter { $0.id != answer.id }.shuffled().prefix(3)
+        return ([answer] + distractors).shuffled()
+    }
+
     static let all: [GeorgianLetter] = {
         let rows: [(String, String, String, String, String)] = [
             ("ა", "ani", "a", "ამბავი", "story"), ("ბ", "bani", "b", "ბაღი", "garden"),
