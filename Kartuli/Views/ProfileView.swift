@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject private var store: LearningStore
-    @AppStorage("isDarkMode") private var isDarkMode = false
+    @Environment(LearningStore.self) private var store
+    @AppStorage(AppearanceMode.storageKey) private var appearance = AppearanceMode.system
     @AppStorage("profileAvatar") private var selectedAvatarID = ProfileAvatar.khinkali.rawValue
     @AppStorage("reminderEnabled") private var reminderEnabled = false
     @AppStorage("reminderTimeMinutes") private var reminderTimeMinutes = 9 * 60
@@ -41,35 +41,45 @@ struct ProfileView: View {
                             VStack(alignment: .leading, spacing: 16) {
                                 HStack { Text("This week").font(.headline); Spacer(); Label("\(store.streak) days", systemImage: "flame.fill").font(.subheadline.bold()).foregroundStyle(AppTheme.coral) }
                                 HStack {
-                                    ForEach(Array(store.currentWeekActivity.enumerated()), id: \.offset) { _, day in
+                                    ForEach(store.currentWeekActivity, id: \.date) { day in
                                         VStack(spacing: 8) {
                                             ZStack {
                                                 Circle().fill(day.isActive ? AppTheme.mint : Color.gray.opacity(0.12)).frame(width: 34, height: 34)
                                                 Image(systemName: day.isActive ? "checkmark" : "minus").font(.caption.bold()).foregroundStyle(day.isActive ? .white : .gray)
                                             }
-                                            Text(day.label).font(.caption2.bold()).foregroundStyle(AppTheme.secondary)
-                                        }.frame(maxWidth: .infinity)
+                                            Text(day.date, format: .dateTime.weekday(.narrow)).font(.caption2.bold()).foregroundStyle(AppTheme.secondary)
+                                        }
+                                        .frame(maxWidth: .infinity)
+                                        .accessibilityElement(children: .ignore)
+                                        .accessibilityLabel(Text(day.date, format: .dateTime.weekday(.wide)))
+                                        .accessibilityValue(day.isActive ? Text("Streak secured") : Text("No activity"))
                                     }
                                 }
                             }
                         }
                         HStack(spacing: 12) {
-                            achievement("flame.fill", "Current streak", "\(store.streak) \(store.streak == 1 ? "day" : "days")", AppTheme.coral)
-                            achievement("trophy.fill", "Longest streak", "\(store.longestStreak) \(store.longestStreak == 1 ? "day" : "days")", AppTheme.yellow)
+                            achievement("flame.fill", "Current streak", "\(store.streak) days", AppTheme.coral)
+                            achievement("trophy.fill", "Longest streak", "\(store.longestStreak) days", AppTheme.yellow)
                         }
                         achievement("character.book.closed.fill", "Letters learned", "\(store.learnedLetterIDs.count) of \(GeorgianLetter.all.count)", AppTheme.violet)
                         VStack(spacing: 0) {
                             HStack(spacing: 13) {
-                                Image(systemName: isDarkMode ? "moon.fill" : "sun.max.fill")
+                                Image(systemName: appearance.icon)
                                     .frame(width: 25)
                                     .foregroundStyle(AppTheme.violet)
-                                Text("Dark mode").foregroundStyle(AppTheme.ink)
+                                    .accessibilityHidden(true)
+                                Text("Appearance").foregroundStyle(AppTheme.ink)
                                 Spacer()
-                                Toggle("Dark mode", isOn: $isDarkMode)
-                                    .labelsHidden()
-                                    .tint(AppTheme.coral)
+                                Picker("Appearance", selection: $appearance) {
+                                    ForEach(AppearanceMode.allCases) { mode in
+                                        Text(mode.title).tag(mode)
+                                    }
+                                }
+                                .labelsHidden()
+                                .pickerStyle(.menu)
+                                .tint(AppTheme.secondary)
                             }
-                            .padding(.vertical, 11)
+                            .padding(.vertical, 5)
                             Divider().padding(.leading, 48)
                             reminderSettings
                         }
@@ -125,7 +135,7 @@ struct ProfileView: View {
                     .foregroundStyle(AppTheme.violet)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Daily reminder").foregroundStyle(AppTheme.ink)
-                    Text(reminderEnabled ? reminderDate.wrappedValue.formatted(date: .omitted, time: .shortened) : "Off")
+                    (reminderEnabled ? Text(reminderDate.wrappedValue, format: .dateTime.hour().minute()) : Text("Off"))
                         .font(.caption)
                         .foregroundStyle(AppTheme.secondary)
                 }
@@ -162,29 +172,21 @@ struct ProfileView: View {
             )
             if enabled && !scheduled {
                 reminderEnabled = false
-                reminderError = "Allow notifications for Kartuli in Settings to receive your daily learning reminder."
+                reminderError = String(localized: "Allow notifications for Kartuli in Settings to receive your daily learning reminder.")
             } else {
                 reminderEnabled = enabled
             }
         }
     }
 
-    private func achievement(_ icon: String, _ title: String, _ detail: String, _ color: Color) -> some View {
+    private func achievement(_ icon: String, _ title: LocalizedStringKey, _ detail: LocalizedStringKey, _ color: Color) -> some View {
         VStack(alignment: .leading, spacing: 9) {
-            Image(systemName: icon).font(.title2).foregroundStyle(color)
+            Image(systemName: icon).font(.title2).foregroundStyle(color).accessibilityHidden(true)
             Text(title).font(.headline).foregroundStyle(AppTheme.ink)
             Text(detail).font(.caption).foregroundStyle(AppTheme.secondary)
-        }.frame(maxWidth: .infinity, alignment: .leading).padding(18).glassEffect(.regular, in: .rect(cornerRadius: 24))
-    }
-
-    private func settingsRow(_ icon: String, _ title: String, _ value: String) -> some View {
-        HStack(spacing: 13) {
-            Image(systemName: icon).frame(width: 25).foregroundStyle(AppTheme.violet)
-            Text(title).foregroundStyle(AppTheme.ink)
-            Spacer()
-            Text(value).font(.subheadline).foregroundStyle(AppTheme.secondary)
-            Image(systemName: "chevron.right").font(.caption).foregroundStyle(.gray)
-        }.padding(.vertical, 15)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading).padding(18).glassEffect(.regular, in: .rect(cornerRadius: 24))
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -224,7 +226,7 @@ private struct AvatarPicker: View {
                             }
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(avatar.name)
+                        .accessibilityLabel(Text(avatar.name))
                         .accessibilityAddTraits(selectedAvatarID == avatar.rawValue ? .isSelected : [])
                     }
                 }

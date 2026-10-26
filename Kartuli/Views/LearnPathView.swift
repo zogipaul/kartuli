@@ -1,17 +1,19 @@
 import SwiftUI
 
+/// Learn: the alphabet path first, then practice modes and the word list.
 struct LearnPathView: View {
-    @EnvironmentObject private var store: LearningStore
+    @Environment(LearningStore.self) private var store
     @State private var query = ""
     @State private var isWordPracticePresented = false
+    @State private var isEndlessPresented = false
 
     private var filteredWords: [GeorgianWord] {
         guard !query.isEmpty else { return GeorgianWord.all }
         return GeorgianWord.all.filter {
             $0.text.contains(query)
                 || $0.transliteration.localizedCaseInsensitiveContains(query)
-                || $0.translation.localizedCaseInsensitiveContains(query)
-                || $0.category.localizedCaseInsensitiveContains(query)
+                || String(localized: $0.translation).localizedCaseInsensitiveContains(query)
+                || String(localized: $0.category.title).localizedCaseInsensitiveContains(query)
         }
     }
 
@@ -22,21 +24,31 @@ struct LearnPathView: View {
                 AppBackground()
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 18) {
-                        header
-                        practiceCard
-                        ForEach(GeorgianWord.categories, id: \.self) { category in
+                        if query.isEmpty {
+                            header
+                            AlphabetPathSection()
+                            practice
+                        }
+                        wordsHeader
+                        ForEach(WordCategory.allCases, id: \.self) { category in
                             if let words = wordsByCategory[category] {
                                 wordSection(category, words: words)
                             }
+                        }
+                        if filteredWords.isEmpty {
+                            ContentUnavailableView.search(text: query)
                         }
                     }
                     .padding(20)
                     .padding(.bottom, 30)
                 }
             }
-            .searchable(text: $query, prompt: "Georgian, pronunciation or meaning")
+            .searchable(text: $query, prompt: "Search words")
             .fullScreenCover(isPresented: $isWordPracticePresented) {
                 WordPracticeView()
+            }
+            .fullScreenCover(isPresented: $isEndlessPresented) {
+                EndlessPracticeView()
             }
             .toolbar(.hidden, for: .navigationBar)
         }
@@ -44,72 +56,52 @@ struct LearnPathView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text("Learn Georgian words")
-                .font(.system(size: 30, weight: .heavy, design: .rounded))
+            Text("Your learning path")
+                .scaledFont(30, weight: .heavy, design: .rounded, relativeTo: .largeTitle)
+                .foregroundStyle(AppTheme.ink)
+            Text("All 33 letters first, then your first Georgian words")
+                .foregroundStyle(AppTheme.secondary)
+        }
+    }
+
+    @ViewBuilder private var practice: some View {
+        Text("Practice")
+            .font(.title3.bold())
+            .foregroundStyle(AppTheme.ink)
+            .padding(.top, 6)
+        if store.isPathComplete {
+            WordPracticeCard { isWordPracticePresented = true }
+            EndlessPracticeCard { isEndlessPresented = true }
+        } else {
+            LockedModeCard(eyebrow: "FIRST WORDS", title: "Build words from letters",
+                           subtitle: "Unlocks after all 33 letters",
+                           symbol: "textformat.abc", tint: AppTheme.coral)
+            LockedModeCard(eyebrow: "ENDLESS MODE", title: "Keep the letters flowing",
+                           subtitle: "\(store.learnedLetterIDs.count) of \(GeorgianLetter.all.count) letters learned",
+                           symbol: "infinity", tint: AppTheme.violet)
+        }
+    }
+
+    private var wordsHeader: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Words")
+                .font(.title3.bold())
                 .foregroundStyle(AppTheme.ink)
             Text("Read, pronounce and remember \(GeorgianWord.all.count) useful words")
+                .font(.subheadline)
                 .foregroundStyle(AppTheme.secondary)
         }
+        .padding(.top, 6)
     }
 
-    private var practiceCard: some View {
-        Button {
-            if store.isWordPracticeUnlocked {
-                isWordPracticePresented = true
-            } else {
-                store.selectedTab = 2
-            }
-        } label: {
-            HStack(spacing: 15) {
-                ZStack {
-                    Circle()
-                        .fill(.white.opacity(0.18))
-                        .frame(width: 60, height: 60)
-                    Image(systemName: store.isWordPracticeUnlocked ? "textformat.abc" : "character.book.closed.fill")
-                        .font(.system(size: 25, weight: .bold))
-                        .foregroundStyle(.white)
-                }
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(store.isWordPracticeUnlocked ? "PRACTICE" : "LEARN THE LETTERS FIRST")
-                        .font(.caption2.bold())
-                        .tracking(1.1)
-                        .foregroundStyle(AppTheme.yellow)
-                    Text(store.isWordPracticeUnlocked ? "Build words from letters" : "Open your alphabet path")
-                        .font(.headline.bold())
-                        .foregroundStyle(.white)
-                    Text(store.isWordPracticeUnlocked
-                         ? "\(store.masteredWordIDs.count) of \(GeorgianWord.all.count) words learned"
-                         : "You can study every word here while you learn all 33 letters")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.78))
-                }
-                Spacer(minLength: 4)
-                Image(systemName: "arrow.right")
-                    .foregroundStyle(AppTheme.onLightSurface)
-                    .padding(12)
-                    .background(.white, in: Circle())
-            }
-            .padding(18)
-            .frame(maxWidth: .infinity)
-            .background(
-                LinearGradient(
-                    colors: [AppTheme.coral, Color(red: 0.95, green: 0.44, blue: 0.30)],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ),
-                in: RoundedRectangle(cornerRadius: 27, style: .continuous)
-            )
-            .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func wordSection(_ category: String, words: [GeorgianWord]) -> some View {
+    private func wordSection(_ category: WordCategory, words: [GeorgianWord]) -> some View {
         LazyVStack(alignment: .leading, spacing: 10) {
-            Text(category.uppercased())
+            Text(category.title)
                 .font(.caption.bold())
+                .textCase(.uppercase)
                 .tracking(1.1)
                 .foregroundStyle(AppTheme.secondary)
+                .accessibilityAddTraits(.isHeader)
 
             ForEach(words) { word in
                 wordCard(word)
@@ -118,40 +110,59 @@ struct LearnPathView: View {
     }
 
     private func wordCard(_ word: GeorgianWord) -> some View {
-        HStack(spacing: 14) {
-            Text(word.text)
-                .font(.system(size: 27, weight: .bold, design: .rounded))
-                .foregroundStyle(AppTheme.violet)
-                .frame(minWidth: 112, alignment: .leading)
-
-            VStack(alignment: .leading, spacing: 3) {
-                Text(word.translation.capitalized)
-                    .font(.headline)
-                    .foregroundStyle(AppTheme.ink)
-                Text(word.transliteration)
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.secondary)
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 14) {
+                wordText(word).frame(minWidth: 112, alignment: .leading)
+                wordDetails(word)
+                Spacer()
+                learnedMark(word)
             }
-
-            Spacer()
-
-            if store.masteredWordIDs.contains(word.id) {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.title3)
-                    .foregroundStyle(AppTheme.mint)
-                    .accessibilityLabel("Learned")
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 6) {
+                    wordText(word)
+                    wordDetails(word)
+                }
+                Spacer()
+                learnedMark(word)
             }
         }
         .padding(16)
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .glassEffect(.regular, in: .rect(cornerRadius: 22))
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(word.text), \(word.transliteration), \(word.translation)")
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("\(word.transliteration), \(Text(word.translation))"))
+        .accessibilityValue(store.masteredWordIDs.contains(word.id) ? Text("Learned") : Text(verbatim: ""))
+    }
+
+    private func wordText(_ word: GeorgianWord) -> some View {
+        Text(verbatim: word.text)
+            .scaledFont(27, design: .rounded, relativeTo: .title2)
+            .foregroundStyle(AppTheme.violet)
+            .fixedSize()
+    }
+
+    private func wordDetails(_ word: GeorgianWord) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(word.translation)
+                .font(.headline)
+                .foregroundStyle(AppTheme.ink)
+            Text(verbatim: word.transliteration)
+                .font(.subheadline)
+                .foregroundStyle(AppTheme.secondary)
+        }
+    }
+
+    @ViewBuilder private func learnedMark(_ word: GeorgianWord) -> some View {
+        if store.masteredWordIDs.contains(word.id) {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.title3)
+                .foregroundStyle(AppTheme.mint)
+        }
     }
 }
 
 struct AlphabetPathSection: View {
-    @EnvironmentObject private var store: LearningStore
+    @Environment(LearningStore.self) private var store
     @State private var isCompletedPathExpanded = false
 
     var body: some View {
@@ -203,48 +214,49 @@ struct AlphabetPathSection: View {
             || GeorgianLetter.all
                 .filter { $0.unit < unit.id }
                 .allSatisfy { store.learnedLetterIDs.contains($0.id) }
+        let color = AppTheme.color(named: unit.colorName)
 
-        return GlassCard {
-            HStack(spacing: 15) {
-                ZStack {
-                    Circle()
-                        .fill(AppTheme.color(named: unit.colorName).opacity(0.14))
-                        .frame(width: 54, height: 54)
-                    Image(systemName: unlocked ? unit.icon : "lock.fill")
-                        .font(.title3.bold())
-                        .foregroundStyle(AppTheme.color(named: unit.colorName))
-                }
+        return Button {
+            store.isLessonPresented = true
+        } label: {
+            GlassCard {
+                HStack(spacing: 15) {
+                    ZStack {
+                        Circle()
+                            .fill(color.opacity(0.14))
+                            .frame(width: 54, height: 54)
+                        Image(systemName: unlocked ? unit.icon : "lock.fill")
+                            .font(.title3.bold())
+                            .foregroundStyle(color)
+                    }
 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("UNIT \(unit.id)")
-                        .font(.caption2.bold())
-                        .tracking(1)
-                        .foregroundStyle(AppTheme.color(named: unit.colorName))
-                    Text(unit.title)
-                        .font(.headline.bold())
-                        .foregroundStyle(AppTheme.ink)
-                    Text(unit.subtitle)
-                        .font(.caption)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("UNIT \(unit.id)")
+                            .font(.caption2.bold())
+                            .tracking(1)
+                            .foregroundStyle(color)
+                        Text(unit.title)
+                            .font(.headline.bold())
+                            .foregroundStyle(AppTheme.ink)
+                        Text(unit.subtitle)
+                            .font(.caption)
+                            .foregroundStyle(AppTheme.secondary)
+                        ProgressView(value: Double(done), total: Double(letters.count))
+                            .tint(color)
+                    }
+
+                    Spacer()
+                    Text("\(done)/\(letters.count)")
+                        .font(.caption.bold())
                         .foregroundStyle(AppTheme.secondary)
-                    ProgressView(value: Double(done), total: Double(letters.count))
-                        .tint(AppTheme.color(named: unit.colorName))
                 }
-
-                Spacer()
-                Text("\(done)/\(letters.count)")
-                    .font(.caption.bold())
-                    .foregroundStyle(AppTheme.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            .contentShape(Rectangle())
-            .opacity(unlocked ? 1 : 0.65)
-            .onTapGesture {
-                if unlocked {
-                    store.isLessonPresented = true
-                }
+                .frame(maxWidth: .infinity)
+                .contentShape(Rectangle())
             }
         }
+        .buttonStyle(.plain)
+        .disabled(!unlocked)
+        .opacity(unlocked ? 1 : 0.65)
         .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(unlocked ? .isButton : [])
     }
 }

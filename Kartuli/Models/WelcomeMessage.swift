@@ -1,7 +1,7 @@
 import Foundation
 
 enum WelcomeMessage {
-    static let all = [
+    static let all: [LocalizedStringResource] = [
         "Ready for your Georgian moment?",
         "Let’s make Georgian click today.",
         "A little Georgian goes a long way.",

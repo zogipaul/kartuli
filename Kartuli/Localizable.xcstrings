@@ -1,0 +1,3816 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "%@ is %@, sounding like “%@”.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ ist %2$@ und klingt wie „%3$@“."
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "%@, %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%lld XP TO STREAK": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NOCH %lld XP ZUR SERIE"
+          }
+        }
+      }
+    },
+    "%lld days": {
+      "localizations": {
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Tag"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld Tage"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld of %lld": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld von %2$lld"
+          }
+        }
+      }
+    },
+    "%lld of %lld letters learned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld von %2$lld Buchstaben gelernt"
+          }
+        }
+      }
+    },
+    "%lld of %lld words learned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld von %2$lld Wörtern gelernt"
+          }
+        }
+      }
+    },
+    "%lld/%lld": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
+    "%lld/%lld XP": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld/%2$lld XP"
+          }
+        }
+      }
+    },
+    "+%lld XP earned · 30 XP secures your streak": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+%lld XP verdient · 30 XP sichern deine Serie"
+          }
+        }
+      }
+    },
+    "33 letters · Mkhedruli script · %lld learned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "33 Buchstaben · Mchedruli-Schrift · %lld gelernt"
+          }
+        }
+      }
+    },
+    "A Georgian word a day keeps doubt away.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein georgisches Wort am Tag vertreibt den Zweifel."
+          }
+        }
+      }
+    },
+    "A few minutes, real progress": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein paar Minuten, echter Fortschritt"
+          }
+        }
+      }
+    },
+    "A fresh lesson for a fresh brain.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine frische Lektion für einen frischen Kopf."
+          }
+        }
+      }
+    },
+    "A little Georgian goes a long way.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein bisschen Georgisch bringt dich weit."
+          }
+        }
+      }
+    },
+    "A little practice, a lot more confidence.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein wenig Übung, viel mehr Selbstvertrauen."
+          }
+        }
+      }
+    },
+    "A new Georgian word belongs to you today.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute gehört dir ein neues georgisches Wort."
+          }
+        }
+      }
+    },
+    "A quick Georgian session? Absolutely.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kurze Runde Georgisch? Auf jeden Fall."
+          }
+        }
+      }
+    },
+    "A quick Georgian win is one tap away.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein schneller Georgisch-Erfolg ist nur einen Tipp entfernt."
+          }
+        }
+      }
+    },
+    "A quick lesson, a real step forward.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kurze Lektion, ein echter Schritt nach vorn."
+          }
+        }
+      }
+    },
+    "A quick review helps the letters feel familiar.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kurze Wiederholung macht die Buchstaben vertraut."
+          }
+        }
+      }
+    },
+    "A quick session now makes tomorrow easier.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kurze Runde jetzt macht es morgen leichter."
+          }
+        }
+      }
+    },
+    "A short Georgian session fits into almost any day.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kurze Georgisch-Runde passt in fast jeden Tag."
+          }
+        }
+      }
+    },
+    "A small step for today": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein kleiner Schritt für heute"
+          }
+        }
+      }
+    },
+    "A tiny lesson can unlock a lot.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kleine Lektion kann viel bewirken."
+          }
+        }
+      }
+    },
+    "A whole new world of letters.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine ganz neue Welt der Buchstaben."
+          }
+        }
+      }
+    },
+    "About 4 min": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etwa 4 Min."
+          }
+        }
+      }
+    },
+    "Accuracy: %lld percent": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genauigkeit: %lld Prozent"
+          }
+        }
+      }
+    },
+    "Air": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Luft"
+          }
+        }
+      }
+    },
+    "All 33 letters first, then your first Georgian words": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erst alle 33 Buchstaben, dann deine ersten georgischen Wörter"
+          }
+        }
+      }
+    },
+    "All 33 letters learned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle 33 Buchstaben gelernt"
+          }
+        }
+      }
+    },
+    "Allow notifications for Kartuli in Settings to receive your daily learning reminder.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erlaube Mitteilungen für Kartuli in den Einstellungen, um deine tägliche Lernerinnerung zu erhalten."
+          }
+        }
+      }
+    },
+    "Almost a habit": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fast schon eine Gewohnheit"
+          }
+        }
+      }
+    },
+    "Almost — remember this shape": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fast – merk dir diese Form"
+          }
+        }
+      }
+    },
+    "Almost! This is %@.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fast! Das ist %@."
+          }
+        }
+      }
+    },
+    "Alphabet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alphabet"
+          }
+        }
+      }
+    },
+    "An apostrophe marks an ejective sound: say it with a short, popped burst and no puff of air.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Apostroph kennzeichnet einen Ejektiv: kurz und knackig gesprochen, ohne Hauchlaut."
+          }
+        }
+      }
+    },
+    "Animals": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiere"
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Darstellung"
+          }
+        }
+      }
+    },
+    "Apple": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apfel"
+          }
+        }
+      }
+    },
+    "BUILD YOUR FIRST WORDS": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BAU DEINE ERSTEN WÖRTER"
+          }
+        }
+      }
+    },
+    "Back to Today": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurück zu Heute"
+          }
+        }
+      }
+    },
+    "Beautiful": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schön"
+          }
+        }
+      }
+    },
+    "Bird": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vogel"
+          }
+        }
+      }
+    },
+    "Black": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schwarz"
+          }
+        }
+      }
+    },
+    "Bold & bright": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kräftig & klar"
+          }
+        }
+      }
+    },
+    "Book": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buch"
+          }
+        }
+      }
+    },
+    "Bread": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brot"
+          }
+        }
+      }
+    },
+    "Brilliant! That’s %@.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Super! Das ist %@."
+          }
+        }
+      }
+    },
+    "Brother": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bruder"
+          }
+        }
+      }
+    },
+    "Build this word": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dieses Wort bauen"
+          }
+        }
+      }
+    },
+    "Build words from letters": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wörter aus Buchstaben bauen"
+          }
+        }
+      }
+    },
+    "Build your first words": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bau deine ersten Wörter"
+          }
+        }
+      }
+    },
+    "Cat": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katze"
+          }
+        }
+      }
+    },
+    "Check answer": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Antwort prüfen"
+          }
+        }
+      }
+    },
+    "Check word": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wort prüfen"
+          }
+        }
+      }
+    },
+    "Cheese": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Käse"
+          }
+        }
+      }
+    },
+    "Choose avatar": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avatar wählen"
+          }
+        }
+      }
+    },
+    "Choose profile avatar": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profilbild wählen"
+          }
+        }
+      }
+    },
+    "Choose the correct Georgian letter": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle den richtigen georgischen Buchstaben"
+          }
+        }
+      }
+    },
+    "Choose the letter with this name": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle den Buchstaben mit diesem Namen"
+          }
+        }
+      }
+    },
+    "Choose the matching letter": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle den passenden Buchstaben"
+          }
+        }
+      }
+    },
+    "Choose the matching sound": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle den passenden Laut"
+          }
+        }
+      }
+    },
+    "Churchkhela": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tschurtschchela"
+          }
+        }
+      }
+    },
+    "City": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stadt"
+          }
+        }
+      }
+    },
+    "Clear": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Löschen"
+          }
+        }
+      }
+    },
+    "Close lesson": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lektion schließen"
+          }
+        }
+      }
+    },
+    "Coffee": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaffee"
+          }
+        }
+      }
+    },
+    "Color": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farbe"
+          }
+        }
+      }
+    },
+    "Combo: %lld": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Combo: %lld"
+          }
+        }
+      }
+    },
+    "Come back today and keep your learning streak growing.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Komm heute zurück und lass deine Lernserie weiter wachsen."
+          }
+        }
+      }
+    },
+    "Come for the letters, stay for the progress.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Komm wegen der Buchstaben, bleib wegen der Fortschritte."
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiter"
+          }
+        }
+      }
+    },
+    "Continue lesson": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lektion fortsetzen"
+          }
+        }
+      }
+    },
+    "Country": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Land"
+          }
+        }
+      }
+    },
+    "Current streak": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktuelle Serie"
+          }
+        }
+      }
+    },
+    "Daily goal": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tagesziel"
+          }
+        }
+      }
+    },
+    "Daily reminder": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tägliche Erinnerung"
+          }
+        }
+      }
+    },
+    "Dark": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dunkel"
+          }
+        }
+      }
+    },
+    "Day": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tag"
+          }
+        }
+      }
+    },
+    "Dog": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hund"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fertig"
+          }
+        }
+      }
+    },
+    "Don’t lose your streak": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlier deine Serie nicht"
+          }
+        }
+      }
+    },
+    "Double-tap to skip the introduction": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doppeltippen, um das Intro zu überspringen"
+          }
+        }
+      }
+    },
+    "ENDLESS MODE": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ENDLOSMODUS"
+          }
+        }
+      }
+    },
+    "Earn 30 XP today to keep it alive.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verdiene heute 30 XP, damit sie weiterläuft."
+          }
+        }
+      }
+    },
+    "Ejective: a short, popped sound without a puff of air.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ejektiv: ein kurzer, knackiger Laut ohne Hauchlaut."
+          }
+        }
+      }
+    },
+    "Empty": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leer"
+          }
+        }
+      }
+    },
+    "End endless practice": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endlosübung beenden"
+          }
+        }
+      }
+    },
+    "End word practice": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wortübung beenden"
+          }
+        }
+      }
+    },
+    "Endless Mode + First Words unlocked!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endlosmodus + Erste Wörter freigeschaltet!"
+          }
+        }
+      }
+    },
+    "Evening": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abend"
+          }
+        }
+      }
+    },
+    "Every round makes Georgian feel more familiar.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jede Runde macht Georgisch ein Stück vertrauter."
+          }
+        }
+      }
+    },
+    "Everyday": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alltag"
+          }
+        }
+      }
+    },
+    "FIRST WORDS": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ERSTE WÖRTER"
+          }
+        }
+      }
+    },
+    "Family": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Familie"
+          }
+        }
+      }
+    },
+    "Father": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vater"
+          }
+        }
+      }
+    },
+    "Final flourish": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der letzte Schliff"
+          }
+        }
+      }
+    },
+    "Find “%@”": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finde „%@“"
+          }
+        }
+      }
+    },
+    "Finish for now": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Für jetzt beenden"
+          }
+        }
+      }
+    },
+    "Finish lesson": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lektion abschließen"
+          }
+        }
+      }
+    },
+    "Finish the alphabet path to unlock": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schließ den Alphabet-Pfad ab, um ihn freizuschalten"
+          }
+        }
+      }
+    },
+    "Finish the alphabet, then start reading": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lern das Alphabet, dann fang an zu lesen"
+          }
+        }
+      }
+    },
+    "Finish your Georgian goal before the day ends.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erreiche dein Georgisch-Ziel, bevor der Tag endet."
+          }
+        }
+      }
+    },
+    "First shapes": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erste Formen"
+          }
+        }
+      }
+    },
+    "First words unlocked": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erste Wörter freigeschaltet"
+          }
+        }
+      }
+    },
+    "Five": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fünf"
+          }
+        }
+      }
+    },
+    "Five minutes of Georgian is all it takes.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fünf Minuten Georgisch genügen."
+          }
+        }
+      }
+    },
+    "Flower": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blume"
+          }
+        }
+      }
+    },
+    "Food & drink": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Essen & Trinken"
+          }
+        }
+      }
+    },
+    "Foreign": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fremd"
+          }
+        }
+      }
+    },
+    "Four": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vier"
+          }
+        }
+      }
+    },
+    "Friend": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Freund"
+          }
+        }
+      }
+    },
+    "GEORGIAN, ONE LETTER AT A TIME": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GEORGISCH, BUCHSTABE FÜR BUCHSTABE"
+          }
+        }
+      }
+    },
+    "Garden": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garten"
+          }
+        }
+      }
+    },
+    "Georgia": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Georgien"
+          }
+        }
+      }
+    },
+    "Georgian Explorer": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Georgisch-Entdecker"
+          }
+        }
+      }
+    },
+    "Georgian gets easier every time you return.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Georgisch wird mit jedem Mal leichter."
+          }
+        }
+      }
+    },
+    "Georgian is waiting — shall we?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Georgisch wartet – wollen wir?"
+          }
+        }
+      }
+    },
+    "Georgian mode: activated.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Georgisch-Modus: aktiviert."
+          }
+        }
+      }
+    },
+    "Georgian practice looks good on you.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Georgisch üben steht dir gut."
+          }
+        }
+      }
+    },
+    "Georgian words are closer than they look.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Georgische Wörter sind näher, als sie aussehen."
+          }
+        }
+      }
+    },
+    "Glass": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glas"
+          }
+        }
+      }
+    },
+    "Good afternoon": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guten Tag"
+          }
+        }
+      }
+    },
+    "Good evening": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guten Abend"
+          }
+        }
+      }
+    },
+    "Good morning": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guten Morgen"
+          }
+        }
+      }
+    },
+    "Good night": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gute Nacht"
+          }
+        }
+      }
+    },
+    "Good time to practice": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gute Zeit zum Üben"
+          }
+        }
+      }
+    },
+    "Good try — keep it moving!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guter Versuch – weiter geht’s!"
+          }
+        }
+      }
+    },
+    "Goodbye": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auf Wiedersehen"
+          }
+        }
+      }
+    },
+    "Grape": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traube"
+          }
+        }
+      }
+    },
+    "Great combo — %lld in a row": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starke Combo – %lld in Folge"
+          }
+        }
+      }
+    },
+    "Great practice!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gut geübt!"
+          }
+        }
+      }
+    },
+    "Heart": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herz"
+          }
+        }
+      }
+    },
+    "Hello": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hallo"
+          }
+        }
+      }
+    },
+    "High score %lld · No time limit": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rekord %lld · Ohne Zeitlimit"
+          }
+        }
+      }
+    },
+    "Hope": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoffnung"
+          }
+        }
+      }
+    },
+    "House": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haus"
+          }
+        }
+      }
+    },
+    "Jazz": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jazz"
+          }
+        }
+      }
+    },
+    "Jump back in and keep the letters flowing.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steig wieder ein und bleib im Buchstabenfluss."
+          }
+        }
+      }
+    },
+    "Kartuli": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kartuli"
+          }
+        }
+      }
+    },
+    "Keep learning": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiterlernen"
+          }
+        }
+      }
+    },
+    "Keep learning and read more Georgian every day.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lern weiter und lies jeden Tag mehr Georgisch."
+          }
+        }
+      }
+    },
+    "Keep practicing": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiter üben"
+          }
+        }
+      }
+    },
+    "Keep the letters flowing": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bleib im Buchstabenfluss"
+          }
+        }
+      }
+    },
+    "Keep the momentum": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bleib in Schwung"
+          }
+        }
+      }
+    },
+    "Keep your streak alive": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halte deine Serie am Leben"
+          }
+        }
+      }
+    },
+    "Khachapuri": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chatschapuri"
+          }
+        }
+      }
+    },
+    "Khinkali": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chinkali"
+          }
+        }
+      }
+    },
+    "Lake": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See"
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sprache"
+          }
+        }
+      }
+    },
+    "Learn": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lernen"
+          }
+        }
+      }
+    },
+    "Learn a few letters and collect your 30 XP.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lern ein paar Buchstaben und hol dir deine 30 XP."
+          }
+        }
+      }
+    },
+    "Learned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelernt"
+          }
+        }
+      }
+    },
+    "Learning since %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lernt seit %@"
+          }
+        }
+      }
+    },
+    "Lesson complete!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lektion geschafft!"
+          }
+        }
+      }
+    },
+    "Lesson progress": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lektionsfortschritt"
+          }
+        }
+      }
+    },
+    "Letter %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstabe %@"
+          }
+        }
+      }
+    },
+    "Letter, name or sound": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstabe, Name oder Laut"
+          }
+        }
+      }
+    },
+    "Letters 15–21": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstaben 15–21"
+          }
+        }
+      }
+    },
+    "Letters 22–28": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstaben 22–28"
+          }
+        }
+      }
+    },
+    "Letters 8–14": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstaben 8–14"
+          }
+        }
+      }
+    },
+    "Letters learned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelernte Buchstaben"
+          }
+        }
+      }
+    },
+    "Letters, words, progress": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstaben, Wörter, Fortschritt"
+          }
+        }
+      }
+    },
+    "Let’s add a little თბილისი to your day.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bring ein bisschen თბილისი in deinen Tag."
+          }
+        }
+      }
+    },
+    "Let’s add one more win to your day.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hol dir heute noch einen Erfolg."
+          }
+        }
+      }
+    },
+    "Let’s build some Georgian confidence.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lass uns Sicherheit im Georgischen aufbauen."
+          }
+        }
+      }
+    },
+    "Let’s collect another Georgian win.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sammeln wir noch einen Georgisch-Erfolg."
+          }
+        }
+      }
+    },
+    "Let’s get one percent better at Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Werden wir ein Prozent besser in Georgisch."
+          }
+        }
+      }
+    },
+    "Let’s give your Georgian skills a boost.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geben wir deinem Georgisch einen Schub."
+          }
+        }
+      }
+    },
+    "Let’s give your streak something to celebrate.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geben wir deiner Serie einen Grund zu feiern."
+          }
+        }
+      }
+    },
+    "Let’s keep building your Georgian world.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bauen wir weiter an deiner georgischen Welt."
+          }
+        }
+      }
+    },
+    "Let’s keep learning, one tap at a time.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lernen wir weiter, Tipp für Tipp."
+          }
+        }
+      }
+    },
+    "Let’s keep those Georgian neurons glowing.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halten wir deine Georgisch-Neuronen auf Trab."
+          }
+        }
+      }
+    },
+    "Let’s keep your Georgian momentum moving.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bleiben wir mit Georgisch in Schwung."
+          }
+        }
+      }
+    },
+    "Let’s learn something worth remembering.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lernen wir etwas, das bleibt."
+          }
+        }
+      }
+    },
+    "Let’s make Georgian click today.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute macht Georgisch klick."
+          }
+        }
+      }
+    },
+    "Let’s make Georgian feel less foreign.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir Georgisch ein bisschen weniger fremd."
+          }
+        }
+      }
+    },
+    "Let’s make Georgian your new superpower.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir Georgisch zu deiner Superkraft."
+          }
+        }
+      }
+    },
+    "Let’s make a few letters feel like home.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir ein paar Buchstaben zu alten Bekannten."
+          }
+        }
+      }
+    },
+    "Let’s make a new word stick.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lass uns ein neues Wort verankern."
+          }
+        }
+      }
+    },
+    "Let’s make room for a Georgian mini-win.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit für einen kleinen Georgisch-Erfolg."
+          }
+        }
+      }
+    },
+    "Let’s make the Georgian alphabet yours.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach dir das georgische Alphabet zu eigen."
+          }
+        }
+      }
+    },
+    "Let’s make those letters feel familiar.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir die Buchstaben vertraut."
+          }
+        }
+      }
+    },
+    "Let’s make today a learning day.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir heute zum Lerntag."
+          }
+        }
+      }
+    },
+    "Let’s make today’s lesson count.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lass die heutige Lektion zählen."
+          }
+        }
+      }
+    },
+    "Let’s put those Georgian letters to work.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lassen wir die georgischen Buchstaben arbeiten."
+          }
+        }
+      }
+    },
+    "Let’s turn curiosity into Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir aus Neugier Georgisch."
+          }
+        }
+      }
+    },
+    "Let’s turn five minutes into progress.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir aus fünf Minuten Fortschritt."
+          }
+        }
+      }
+    },
+    "Let’s turn letters into meaning.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir aus Buchstaben Bedeutung."
+          }
+        }
+      }
+    },
+    "Let’s turn today into progress.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Machen wir den heutigen Tag zum Fortschritt."
+          }
+        }
+      }
+    },
+    "Let’s wake up your Georgian brain.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wecken wir dein Georgisch-Gehirn."
+          }
+        }
+      }
+    },
+    "Light": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hell"
+          }
+        }
+      }
+    },
+    "Locked for now": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch gesperrt"
+          }
+        }
+      }
+    },
+    "Longest streak": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Längste Serie"
+          }
+        }
+      }
+    },
+    "Look at the word and say it aloud. Then tap the letters to build it yourself.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sieh dir das Wort an und sprich es laut aus. Tippe dann die Buchstaben, um es selbst zu bauen."
+          }
+        }
+      }
+    },
+    "Love": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liebe"
+          }
+        }
+      }
+    },
+    "MEET A NEW LETTER": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LERN EINEN NEUEN BUCHSTABEN KENNEN"
+          }
+        }
+      }
+    },
+    "MEET A WORD": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LERN EIN WORT KENNEN"
+          }
+        }
+      }
+    },
+    "Make room for one more Georgian word.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach Platz für noch ein georgisches Wort."
+          }
+        }
+      }
+    },
+    "Man": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mann"
+          }
+        }
+      }
+    },
+    "Meet them in today’s short lesson.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lern sie in der heutigen kurzen Lektion kennen."
+          }
+        }
+      }
+    },
+    "Morning": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morgen"
+          }
+        }
+      }
+    },
+    "Mother": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mutter"
+          }
+        }
+      }
+    },
+    "Mountain": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berg"
+          }
+        }
+      }
+    },
+    "Nature": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Natur"
+          }
+        }
+      }
+    },
+    "New": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neu"
+          }
+        }
+      }
+    },
+    "New letters are waiting": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neue Buchstaben warten"
+          }
+        }
+      }
+    },
+    "New letters, new words, new wins.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neue Buchstaben, neue Wörter, neue Erfolge."
+          }
+        }
+      }
+    },
+    "Next letter": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächster Buchstabe"
+          }
+        }
+      }
+    },
+    "Next up": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Als Nächstes"
+          }
+        }
+      }
+    },
+    "Next word": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nächstes Wort"
+          }
+        }
+      }
+    },
+    "Nice one!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gut gemacht!"
+          }
+        }
+      }
+    },
+    "Night": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nacht"
+          }
+        }
+      }
+    },
+    "Nino": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nino"
+          }
+        }
+      }
+    },
+    "No": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nein"
+          }
+        }
+      }
+    },
+    "No activity": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Aktivität"
+          }
+        }
+      }
+    },
+    "Numbers": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zahlen"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Off": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus"
+          }
+        }
+      }
+    },
+    "One": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eins"
+          }
+        }
+      }
+    },
+    "One lesson closer to speaking Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Lektion näher dran, Georgisch zu sprechen."
+          }
+        }
+      }
+    },
+    "One lesson or 15 correct answers is enough.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Lektion oder 15 richtige Antworten genügen."
+          }
+        }
+      }
+    },
+    "One lesson. Zero pressure. Real progress.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Lektion. Kein Druck. Echter Fortschritt."
+          }
+        }
+      }
+    },
+    "One more step toward fluent-ish.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch ein Schritt Richtung fast fließend."
+          }
+        }
+      }
+    },
+    "One more word for future you.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch ein Wort für dein zukünftiges Ich."
+          }
+        }
+      }
+    },
+    "One short lesson keeps your streak going.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine kurze Lektion hält deine Serie am Laufen."
+          }
+        }
+      }
+    },
+    "One small tap for you, one big Georgian step.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein kleiner Tipp für dich, ein großer Schritt im Georgischen."
+          }
+        }
+      }
+    },
+    "One tap closer to reading Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einen Tipp näher dran, Georgisch zu lesen."
+          }
+        }
+      }
+    },
+    "Open Kartuli and secure today’s streak.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffne Kartuli und sichere deine heutige Serie."
+          }
+        }
+      }
+    },
+    "People": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menschen"
+          }
+        }
+      }
+    },
+    "Perfect — you built it!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfekt – du hast es gebaut!"
+          }
+        }
+      }
+    },
+    "Phrases": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redewendungen"
+          }
+        }
+      }
+    },
+    "Pick up where you left off in Kartuli.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach in Kartuli dort weiter, wo du aufgehört hast."
+          }
+        }
+      }
+    },
+    "Pick your Georgian sidekick": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle deinen georgischen Begleiter"
+          }
+        }
+      }
+    },
+    "Places": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orte"
+          }
+        }
+      }
+    },
+    "Please": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bitte"
+          }
+        }
+      }
+    },
+    "Pomegranate": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Granatapfel"
+          }
+        }
+      }
+    },
+    "Practice": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Üben"
+          }
+        }
+      }
+    },
+    "Practice makes it stick": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Übung festigt es"
+          }
+        }
+      }
+    },
+    "Practice more words": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mehr Wörter üben"
+          }
+        }
+      }
+    },
+    "Profile": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profil"
+          }
+        }
+      }
+    },
+    "Racha": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ratscha"
+          }
+        }
+      }
+    },
+    "Raspberry": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Himbeere"
+          }
+        }
+      }
+    },
+    "Read, pronounce and remember %lld useful words": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lies, sprich und merk dir %lld nützliche Wörter"
+          }
+        }
+      }
+    },
+    "Ready for a quick practice?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit für eine kurze Übung?"
+          }
+        }
+      }
+    },
+    "Ready for a word-sized victory?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit für einen Sieg in Wortgröße?"
+          }
+        }
+      }
+    },
+    "Ready for another alphabet adventure?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit für ein weiteres Alphabet-Abenteuer?"
+          }
+        }
+      }
+    },
+    "Ready for your Georgian moment?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit für deinen Georgisch-Moment?"
+          }
+        }
+      }
+    },
+    "Ready to give your brain a Georgian boost?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit für einen Georgisch-Schub fürs Gehirn?"
+          }
+        }
+      }
+    },
+    "Ready to keep the streak alive?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, die Serie am Leben zu halten?"
+          }
+        }
+      }
+    },
+    "Ready to learn the language of საქართველო?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, die Sprache von საქართველო zu lernen?"
+          }
+        }
+      }
+    },
+    "Ready to level up your ქართული?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, dein ქართული zu verbessern?"
+          }
+        }
+      }
+    },
+    "Ready to make those letters dance?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, die Buchstaben tanzen zu lassen?"
+          }
+        }
+      }
+    },
+    "Ready to meet your next Georgian word?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit für dein nächstes georgisches Wort?"
+          }
+        }
+      }
+    },
+    "Ready to read something new?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, etwas Neues zu lesen?"
+          }
+        }
+      }
+    },
+    "Ready to surprise yourself in Georgian?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, dich selbst auf Georgisch zu überraschen?"
+          }
+        }
+      }
+    },
+    "Ready to turn practice into progress?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, aus Übung Fortschritt zu machen?"
+          }
+        }
+      }
+    },
+    "Ready to turn sounds into words?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, aus Lauten Wörter zu machen?"
+          }
+        }
+      }
+    },
+    "Ready to unlock another Georgian sound?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit für einen weiteren georgischen Laut?"
+          }
+        }
+      }
+    },
+    "Ready when you are": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereit, wenn du es bist"
+          }
+        }
+      }
+    },
+    "Ready, set, ქართული!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auf die Plätze, fertig, ქართული!"
+          }
+        }
+      }
+    },
+    "Reminder time": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uhrzeit der Erinnerung"
+          }
+        }
+      }
+    },
+    "Reminders unavailable": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erinnerungen nicht verfügbar"
+          }
+        }
+      }
+    },
+    "River": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fluss"
+          }
+        }
+      }
+    },
+    "Round %lld": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Runde %lld"
+          }
+        }
+      }
+    },
+    "STREAK SECURED": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SERIE GESICHERT"
+          }
+        }
+      }
+    },
+    "School": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schule"
+          }
+        }
+      }
+    },
+    "Sea": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meer"
+          }
+        }
+      }
+    },
+    "Search words": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wörter suchen"
+          }
+        }
+      }
+    },
+    "Secure your streak with a quick lesson.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sichere deine Serie mit einer kurzen Lektion."
+          }
+        }
+      }
+    },
+    "See results": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ergebnisse ansehen"
+          }
+        }
+      }
+    },
+    "Session progress": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fortschritt der Runde"
+          }
+        }
+      }
+    },
+    "Show word again": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wort noch einmal zeigen"
+          }
+        }
+      }
+    },
+    "Sky": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Himmel"
+          }
+        }
+      }
+    },
+    "Small daily lessons add up faster than you think.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kleine tägliche Lektionen summieren sich schneller, als du denkst."
+          }
+        }
+      }
+    },
+    "Small lesson. Big Georgian energy.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kleine Lektion. Große Georgisch-Energie."
+          }
+        }
+      }
+    },
+    "Smooth sounds": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiche Laute"
+          }
+        }
+      }
+    },
+    "Snow": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schnee"
+          }
+        }
+      }
+    },
+    "Sorry": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entschuldigung"
+          }
+        }
+      }
+    },
+    "Sounds like %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klingt wie %@"
+          }
+        }
+      }
+    },
+    "Sounds like “%@”": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klingt wie „%@“"
+          }
+        }
+      }
+    },
+    "Steady wins": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beständigkeit gewinnt"
+          }
+        }
+      }
+    },
+    "Still on today’s list": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noch auf der heutigen Liste"
+          }
+        }
+      }
+    },
+    "Story": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geschichte"
+          }
+        }
+      }
+    },
+    "Streak secured": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serie gesichert"
+          }
+        }
+      }
+    },
+    "Sun": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonne"
+          }
+        }
+      }
+    },
+    "System": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        }
+      }
+    },
+    "Take a short break and learn something new.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mach eine kurze Pause und lern etwas Neues."
+          }
+        }
+      }
+    },
+    "Tap the letters in the right order": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tippe die Buchstaben in der richtigen Reihenfolge"
+          }
+        }
+      }
+    },
+    "Tbilisi": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiflis"
+          }
+        }
+      }
+    },
+    "Tea": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tee"
+          }
+        }
+      }
+    },
+    "Thank you": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Danke"
+          }
+        }
+      }
+    },
+    "The Georgian alphabet": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das georgische Alphabet"
+          }
+        }
+      }
+    },
+    "The Georgian alphabet believes in you.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das georgische Alphabet glaubt an dich."
+          }
+        }
+      }
+    },
+    "The last 5 letters": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die letzten 5 Buchstaben"
+          }
+        }
+      }
+    },
+    "The letters are ready when you are.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Buchstaben sind bereit, wenn du es bist."
+          }
+        }
+      }
+    },
+    "The perfect time to learn is now.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der perfekte Moment zum Lernen ist jetzt."
+          }
+        }
+      }
+    },
+    "The road to საქართველო starts with one word.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Weg nach საქართველო beginnt mit einem Wort."
+          }
+        }
+      }
+    },
+    "There’s still time to earn today’s 30 XP.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du hast noch Zeit, die heutigen 30 XP zu verdienen."
+          }
+        }
+      }
+    },
+    "This is %@, sounding like “%@”.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das ist %1$@, klingt wie „%2$@“."
+          }
+        }
+      }
+    },
+    "This week": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Woche"
+          }
+        }
+      }
+    },
+    "Three": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drei"
+          }
+        }
+      }
+    },
+    "Three letters, a few minutes": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drei Buchstaben, ein paar Minuten"
+          }
+        }
+      }
+    },
+    "Three new letters": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drei neue Buchstaben"
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit"
+          }
+        }
+      }
+    },
+    "Time for a little Georgian": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit für ein bisschen Georgisch"
+          }
+        }
+      }
+    },
+    "Time for a tiny Georgian triumph.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit für einen kleinen Georgisch-Triumph."
+          }
+        }
+      }
+    },
+    "Time to give Georgian another go.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeit für eine neue Runde Georgisch."
+          }
+        }
+      }
+    },
+    "Tiny steps. Real Georgian progress.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kleine Schritte. Echter Fortschritt im Georgischen."
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute"
+          }
+        }
+      }
+    },
+    "Today counts": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute zählt"
+          }
+        }
+      }
+    },
+    "Today is a great day for Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heute ist ein toller Tag für Georgisch."
+          }
+        }
+      }
+    },
+    "Today’s Georgian chapter starts here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein heutiges Georgisch-Kapitel beginnt hier."
+          }
+        }
+      }
+    },
+    "Today’s Georgian goal is within reach.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein heutiges Georgisch-Ziel ist in Reichweite."
+          }
+        }
+      }
+    },
+    "Today’s lesson is ready when you are.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die heutige Lektion ist bereit, wenn du es bist."
+          }
+        }
+      }
+    },
+    "Today’s mission: one Georgian win.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heutige Mission: ein Georgisch-Erfolg."
+          }
+        }
+      }
+    },
+    "Today’s vibe: learning ქართული.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heutige Stimmung: ქართული lernen."
+          }
+        }
+      }
+    },
+    "Tomorrow": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morgen"
+          }
+        }
+      }
+    },
+    "Tree": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Baum"
+          }
+        }
+      }
+    },
+    "Tricky twins": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knifflige Zwillinge"
+          }
+        }
+      }
+    },
+    "Two": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zwei"
+          }
+        }
+      }
+    },
+    "UNIT %lld": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "EINHEIT %lld"
+          }
+        }
+      }
+    },
+    "Undo": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rückgängig"
+          }
+        }
+      }
+    },
+    "Unlocks after all 33 letters": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wird nach allen 33 Buchstaben freigeschaltet"
+          }
+        }
+      }
+    },
+    "Unstoppable! %lld in a row": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unaufhaltsam! %lld in Folge"
+          }
+        }
+      }
+    },
+    "View path": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pfad ansehen"
+          }
+        }
+      }
+    },
+    "Village": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dorf"
+          }
+        }
+      }
+    },
+    "Water": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wasser"
+          }
+        }
+      }
+    },
+    "What sound does this letter make?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welchen Laut hat dieser Buchstabe?"
+          }
+        }
+      }
+    },
+    "Which letter sounds like “%@”?": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcher Buchstabe klingt wie „%@“?"
+          }
+        }
+      }
+    },
+    "Wind": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wind"
+          }
+        }
+      }
+    },
+    "Wine": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wein"
+          }
+        }
+      }
+    },
+    "Words": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wörter"
+          }
+        }
+      }
+    },
+    "Words are waiting": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wörter warten auf dich"
+          }
+        }
+      }
+    },
+    "XP earned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XP verdient"
+          }
+        }
+      }
+    },
+    "Yes": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ja"
+          }
+        }
+      }
+    },
+    "You added %@ to your alphabet.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du hast %@ zu deinem Alphabet hinzugefügt."
+          }
+        }
+      }
+    },
+    "You bring the focus. We’ll bring the Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du bringst die Konzentration mit, wir das Georgisch."
+          }
+        }
+      }
+    },
+    "You can now move from recognizing letters to reading real Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jetzt gehst du vom Erkennen der Buchstaben zum Lesen echter georgischer Wörter über."
+          }
+        }
+      }
+    },
+    "Your Georgian comeback starts now.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Georgisch-Comeback beginnt jetzt."
+          }
+        }
+      }
+    },
+    "Your Georgian future is built today.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Georgisch-Zukunft entsteht heute."
+          }
+        }
+      }
+    },
+    "Your Georgian glow-up continues.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Georgisch wird immer besser."
+          }
+        }
+      }
+    },
+    "Your Georgian journey continues here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Georgisch-Reise geht hier weiter."
+          }
+        }
+      }
+    },
+    "Your Georgian moment": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Georgisch-Moment"
+          }
+        }
+      }
+    },
+    "Your Georgian practice arc continues.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Georgisch-Übung geht weiter."
+          }
+        }
+      }
+    },
+    "Your Georgian streak has entered the chat.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Georgisch-Serie ist zurück."
+          }
+        }
+      }
+    },
+    "Your alphabet era continues now.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Alphabet-Phase geht weiter."
+          }
+        }
+      }
+    },
+    "Your alphabet path": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Alphabet-Pfad"
+          }
+        }
+      }
+    },
+    "Your brain called — it wants Georgian.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Gehirn hat angerufen – es will Georgisch."
+          }
+        }
+      }
+    },
+    "Your curiosity speaks Georgian now.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Neugier spricht jetzt Georgisch."
+          }
+        }
+      }
+    },
+    "Your daily Georgian side quest begins.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine tägliche Georgisch-Nebenquest beginnt."
+          }
+        }
+      }
+    },
+    "Your daily dose of ქართული is here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine tägliche Dosis ქართული ist da."
+          }
+        }
+      }
+    },
+    "Your first 7 letters": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine ersten 7 Buchstaben"
+          }
+        }
+      }
+    },
+    "Your learning path": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Lernpfad"
+          }
+        }
+      }
+    },
+    "Your next Georgian win starts here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein nächster Georgisch-Erfolg beginnt hier."
+          }
+        }
+      }
+    },
+    "Your next aha moment is waiting.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein nächster Aha-Moment wartet."
+          }
+        }
+      }
+    },
+    "Your next favorite Georgian word is waiting.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein nächstes georgisches Lieblingswort wartet."
+          }
+        }
+      }
+    },
+    "Your next learning step": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein nächster Lernschritt"
+          }
+        }
+      }
+    },
+    "Your next lesson is short and mighty.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine nächste Lektion ist kurz und stark."
+          }
+        }
+      }
+    },
+    "Your next step is already waiting.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein nächster Schritt wartet schon."
+          }
+        }
+      }
+    },
+    "Your next word is about to click.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gleich macht dein nächstes Wort klick."
+          }
+        }
+      }
+    },
+    "Your next word is close": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein nächstes Wort ist nah"
+          }
+        }
+      }
+    },
+    "Your progress is built one letter at a time.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Fortschritt wächst Buchstabe für Buchstabe."
+          }
+        }
+      }
+    },
+    "Your streak deserves a quick lesson.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Serie hat eine kurze Lektion verdient."
+          }
+        }
+      }
+    },
+    "Your streak is waiting": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Serie wartet"
+          }
+        }
+      }
+    },
+    "accuracy": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genauigkeit"
+          }
+        }
+      }
+    },
+    "best combo": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "beste Combo"
+          }
+        }
+      }
+    },
+    "correct": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "richtig"
+          }
+        }
+      }
+    },
+    "day streak": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tage-Serie"
+          }
+        }
+      }
+    },
+    "letters": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstaben"
+          }
+        }
+      }
+    },
+    "letters known": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buchstaben bekannt"
+          }
+        }
+      }
+    },
+    "this round": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "diese Runde"
+          }
+        }
+      }
+    },
+    "total XP": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "XP gesamt"
+          }
+        }
+      }
+    },
+    "words learned": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wörter gelernt"
+          }
+        }
+      }
+    },
+    "ქართული is calling": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ქართული ruft"
+          }
+        }
+      }
+    },
+    "ქართული is calling — pick up!": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ქართული ruft – geh ran!"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

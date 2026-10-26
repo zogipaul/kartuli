@@ -15,6 +15,12 @@ enum AppTheme {
                               dark: UIColor(red: 0.045, green: 0.05, blue: 0.09, alpha: 1))
     static let subtleBorder = Color(light: .white, dark: UIColor.white.withAlphaComponent(0.20))
     static let onLightSurface = Color(red: 0.10, green: 0.11, blue: 0.18)
+    static let coralDeep = Color(red: 0.95, green: 0.44, blue: 0.30)
+    static let violetDeep = Color(red: 0.35, green: 0.28, blue: 0.86)
+
+    static let heroGradient = LinearGradient(colors: [violet, violetDeep], startPoint: .topLeading, endPoint: .bottomTrailing)
+    static let wordsGradient = LinearGradient(colors: [coral, coralDeep], startPoint: .topLeading, endPoint: .bottomTrailing)
+    static let endlessGradient = LinearGradient(colors: [violet, blue], startPoint: .topLeading, endPoint: .bottomTrailing)
 
     static func color(named: String) -> Color {
         switch named {

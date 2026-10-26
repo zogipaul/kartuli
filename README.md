@@ -12,12 +12,15 @@ multiple-choice challenge, earn 30 XP, and secure the day's streak. A complete a
 makes progress tangible while short themed units turn the script into a path
 instead of a reference chart.
 
-- **Today:** daily goal, streak, XP, and the next lesson.
-- **Learn:** a five-unit path through all 33 Mkhedruli letters.
+- **Today:** a greeting that follows the time of day (დილა / დღე / საღამო / ღამე
+  მშვიდობისა), daily goal, streak, XP, and the next lesson.
+- **Learn:** a five-unit path through all 33 Mkhedruli letters, the practice
+  modes, and a searchable list of words.
 - **Alphabet:** filterable reference grid with learned/new states.
 - **Endless Practice:** an unlimited mixed quiz across all 33 letters with
   accuracy, combos, instant feedback and a session summary.
-- **Profile:** weekly activity, achievements, and a daily notification reminder.
+- **Profile:** weekly activity, achievements, appearance (System, Light, Dark),
+  and a daily notification reminder.
 - **Widget:** a small or medium Home Screen view of the current learning streak.
 - **Lesson:** reveal a letter, say it aloud, view a memory hook, then answer a
   randomized recognition question with immediate feedback.
@@ -28,7 +31,12 @@ the day. Incorrect answers award no XP.
 
 The visual direction combines a warm Georgian red with lavender and mint,
 oversized typography, soft gradients, friendly microcopy, and native Liquid
-Glass surfaces. It uses only SwiftUI and SF Symbols.
+Glass surfaces. It uses only SwiftUI and SF Symbols. Custom type sizes follow Dynamic Type, and
+Georgian glyphs have VoiceOver labels with the letter name.
+
+The app and widget are localized in English and German through String Catalogs
+(`Localizable.xcstrings`). Letters and words use one romanization, the Georgian
+national system, where an apostrophe marks an ejective (k', p', t', q', ts', ch').
 
 On a fresh launch, a short SwiftUI intro brings the app-icon artwork into an orbit
 of Georgian letters, followed by a light sweep and a soft transition into Today.
@@ -57,8 +65,8 @@ and timing measurements are retained in the `.xcresult` under DerivedData.
 The history benchmark compares the original linear scan with the indexed lookup
 using 3,651 activity days; this is a stress scenario, not a launch/FPS benchmark.
 
-Verified locally on 2026-10-25: 12 unit tests and 3 UI tests passed, including
-maximum accessibility text size on iPhone 17e / iOS 26.5; the unsigned iOS Release
+Verified locally on 2026-10-26: 16 unit tests and 3 UI tests passed, including
+maximum accessibility text size on iPhone 17 Pro; the unsigned iOS Release
 build of app and widget passed. The final Debug simulator benchmark on iPhone
 17 Pro / iOS 26.5 took 3,367 ms for 100 original week lookups versus 2.1 ms for
 the indexed implementation with 3,651 activity dates. These are algorithm timings,

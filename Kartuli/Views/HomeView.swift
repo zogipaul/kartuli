@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject private var store: LearningStore
+    @Environment(LearningStore.self) private var store
     @AppStorage("profileAvatar") private var selectedAvatarID = ProfileAvatar.khinkali.rawValue
     @State private var isEndlessPresented = false
     @State private var isWordPracticePresented = false
@@ -41,12 +41,18 @@ struct HomeView: View {
 
     private var header: some View {
         HStack {
-            VStack(alignment: .leading, spacing: 3) {
-                Text("დილა მშვიდობისა!").font(.title2.bold()).foregroundStyle(AppTheme.ink)
-                Text("Good morning, learner").font(.subheadline).foregroundStyle(AppTheme.secondary)
+            TimelineView(.everyMinute) { context in
+                let greeting = DayGreeting(date: context.date)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(verbatim: greeting.georgian).font(.title2.bold()).foregroundStyle(AppTheme.ink)
+                    Text("\(Text(verbatim: greeting.transliteration).italic()) · \(Text(greeting.meaning))")
+                        .font(.subheadline).foregroundStyle(AppTheme.secondary)
+                }
+                .accessibilityElement(children: .combine)
             }
             Spacer()
             ProfileAvatarImage(avatar: selectedAvatar, size: 50)
+                .accessibilityHidden(true)
         }
         .padding(.top, 12)
     }
@@ -54,23 +60,23 @@ struct HomeView: View {
     private var hero: some View {
         ZStack(alignment: .topTrailing) {
             RoundedRectangle(cornerRadius: 32, style: .continuous)
-                .fill(LinearGradient(colors: [AppTheme.violet, Color(red: 0.35, green: 0.28, blue: 0.86)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                .fill(AppTheme.heroGradient)
             Circle().fill(.white.opacity(0.1)).frame(width: 180).offset(x: 65, y: -70)
             VStack(alignment: .leading, spacing: 17) {
                 HStack {
-                    Label(store.todayLabel, systemImage: "flame.fill")
+                    Label { Text(store.todayLabel) } icon: { Image(systemName: "flame.fill") }
                         .font(.caption.bold()).foregroundStyle(AppTheme.yellow)
                     Spacer()
                     Text("\(store.dailyProgress)/\(store.streakXPThreshold) XP")
                         .font(.caption.bold()).foregroundStyle(.white.opacity(0.8))
                 }
-                Text(store.welcomeMessage)
-                    .font(.system(size: 29, weight: .heavy, design: .rounded))
+                Text(verbatim: store.welcomeMessage)
+                    .scaledFont(29, weight: .heavy, design: .rounded, relativeTo: .title)
                     .foregroundStyle(.white)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.82)
+                    .fixedSize(horizontal: false, vertical: true)
                 ProgressView(value: Double(store.dailyProgress), total: Double(store.streakXPThreshold))
                     .tint(AppTheme.yellow).background(.white.opacity(0.2)).clipShape(.capsule)
+                    .accessibilityLabel("Daily goal")
                 Button {
                     if store.isEndlessUnlocked {
                         isWordPracticePresented = true
@@ -83,10 +89,10 @@ struct HomeView: View {
                         Spacer()
                         Image(systemName: "arrow.right")
                     }
-                        .foregroundStyle(AppTheme.onLightSurface)
-                        .font(.headline.bold())
-                        .padding(.horizontal, 18).padding(.vertical, 15)
-                        .background(.white, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .foregroundStyle(AppTheme.onLightSurface)
+                    .font(.headline.bold())
+                    .padding(.horizontal, 18).padding(.vertical, 15)
+                    .background(.white, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
                 }
             }
             .padding(24)
@@ -108,61 +114,38 @@ struct HomeView: View {
             HStack {
                 Text("Next up").font(.title3.bold()).foregroundStyle(AppTheme.ink)
                 Spacer()
-                Button("View path") { store.selectedTab = 2 }.font(.subheadline.bold()).foregroundStyle(AppTheme.coral)
+                Button("View path") { store.selectedTab = .learn }.font(.subheadline.bold()).foregroundStyle(AppTheme.coral)
             }
-            GlassCard {
-                HStack(spacing: 16) {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20).fill(AppTheme.coral.opacity(0.12)).frame(width: 72, height: 72)
-                        Text(store.nextLetters.first?.glyph ?? "ა").font(.system(size: 42, weight: .bold)).foregroundStyle(AppTheme.coral)
+            Button { store.isLessonPresented = true } label: {
+                GlassCard {
+                    HStack(spacing: 16) {
+                        Text(verbatim: store.nextLetters.first?.glyph ?? "ა")
+                            .scaledFont(42, relativeTo: .title, maxSize: 64)
+                            .foregroundStyle(AppTheme.coral)
+                            .frame(minWidth: 72, minHeight: 72)
+                            .background(AppTheme.coral.opacity(0.12), in: RoundedRectangle(cornerRadius: 20))
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Three new letters").font(.headline).foregroundStyle(AppTheme.ink)
+                            Text(verbatim: store.nextLetters.map(\.glyph).joined(separator: "  "))
+                                .font(.title2.bold()).foregroundStyle(AppTheme.violet)
+                                .accessibilityLabel(store.nextLetters.map(\.name).joined(separator: ", "))
+                            Label("About 4 min", systemImage: "clock").font(.caption).foregroundStyle(AppTheme.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right").foregroundStyle(AppTheme.secondary)
                     }
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Three new letters").font(.headline).foregroundStyle(AppTheme.ink)
-                        Text(store.nextLetters.map(\.glyph).joined(separator: "  ")).font(.title2.bold()).foregroundStyle(AppTheme.violet)
-                        Label("About 4 min", systemImage: "clock").font(.caption).foregroundStyle(AppTheme.secondary)
-                    }
-                    Spacer()
-                    Image(systemName: "chevron.right").foregroundStyle(AppTheme.secondary)
+                    .contentShape(Rectangle())
                 }
-                .contentShape(Rectangle())
-                .onTapGesture { store.isLessonPresented = true }
             }
-            lockedEndlessMode
-            lockedWordPractice
+            .buttonStyle(.plain)
+            LockedModeCard(eyebrow: "ENDLESS MODE", title: "Locked for now",
+                           subtitle: "Finish the alphabet path to unlock",
+                           symbol: "infinity", tint: AppTheme.violet)
+            LockedModeCard(eyebrow: "FIRST WORDS", title: "Your next learning step",
+                           subtitle: "Finish the alphabet, then start reading",
+                           symbol: "textformat.abc", tint: AppTheme.coral)
         }
-    }
-
-    private var lockedWordPractice: some View {
-        HStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(AppTheme.coral.opacity(0.12))
-                    .frame(width: 62, height: 62)
-                Image(systemName: "lock.fill")
-                    .font(.system(size: 23, weight: .bold))
-                    .foregroundStyle(AppTheme.coral)
-            }
-            VStack(alignment: .leading, spacing: 4) {
-                Text("FIRST WORDS")
-                    .font(.caption2.bold())
-                    .tracking(1.1)
-                    .foregroundStyle(AppTheme.coral)
-                Text("Your next learning step")
-                    .font(.headline.bold())
-                    .foregroundStyle(AppTheme.ink)
-                Text("Finish the alphabet, then start reading")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.secondary)
-            }
-            Spacer()
-            Image(systemName: "textformat.abc")
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(AppTheme.secondary.opacity(0.65))
-        }
-        .padding(18)
-        .glassEffect(.regular, in: .rect(cornerRadius: 27))
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("First Words. Finish the alphabet, then start reading.")
     }
 
     private var practiceModes: some View {
@@ -170,134 +153,32 @@ struct HomeView: View {
             Text("Keep learning")
                 .font(.title3.bold())
                 .foregroundStyle(AppTheme.ink)
-            wordPracticeMode
-            endlessMode
+            WordPracticeCard { isWordPracticePresented = true }
+            EndlessPracticeCard { isEndlessPresented = true }
         }
-    }
-
-    private var wordPracticeMode: some View {
-        Button { isWordPracticePresented = true } label: {
-            HStack(spacing: 16) {
-                ZStack {
-                    Circle().fill(.white.opacity(0.18)).frame(width: 62, height: 62)
-                    Image(systemName: "textformat.abc")
-                        .font(.system(size: 27, weight: .bold))
-                        .foregroundStyle(.white)
-                }
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("FIRST WORDS")
-                        .font(.caption2.bold())
-                        .tracking(1.1)
-                        .foregroundStyle(AppTheme.yellow)
-                    Text("Build words from letters")
-                        .font(.title3.bold())
-                        .foregroundStyle(.white)
-                    Text("\(store.masteredWordIDs.count) of \(GeorgianWord.all.count) words learned")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.78))
-                }
-                Spacer()
-                Image(systemName: "arrow.right")
-                    .foregroundStyle(AppTheme.onLightSurface)
-                    .padding(13)
-                    .background(.white, in: Circle())
-            }
-            .padding(18)
-            .background(
-                LinearGradient(colors: [AppTheme.coral, Color(red: 0.95, green: 0.44, blue: 0.30)], startPoint: .topLeading, endPoint: .bottomTrailing),
-                in: RoundedRectangle(cornerRadius: 27, style: .continuous)
-            )
-            .shadow(color: AppTheme.coral.opacity(0.20), radius: 16, y: 8)
-            .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
-        }
-        .buttonStyle(.plain)
-    }
-
-    private var lockedEndlessMode: some View {
-        HStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(AppTheme.violet.opacity(0.12))
-                    .frame(width: 62, height: 62)
-                Image(systemName: "lock.fill")
-                    .font(.system(size: 23, weight: .bold))
-                    .foregroundStyle(AppTheme.violet)
-            }
-            VStack(alignment: .leading, spacing: 4) {
-                Text("ENDLESS MODE")
-                    .font(.caption2.bold())
-                    .tracking(1.1)
-                    .foregroundStyle(AppTheme.violet)
-                Text("Locked for now")
-                    .font(.headline.bold())
-                    .foregroundStyle(AppTheme.ink)
-                Text("Finish the current path to unlock")
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.secondary)
-            }
-            Spacer()
-            Image(systemName: "infinity")
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(AppTheme.secondary.opacity(0.65))
-        }
-        .padding(18)
-        .glassEffect(.regular, in: .rect(cornerRadius: 27))
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Endless Mode. Locked for now. Finish the current path to unlock.")
-    }
-
-    private var endlessMode: some View {
-        Button { isEndlessPresented = true } label: {
-            HStack(spacing: 16) {
-                ZStack {
-                    Circle().fill(.white.opacity(0.18)).frame(width: 62, height: 62)
-                    Image(systemName: "infinity")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundStyle(.white)
-                }
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("ENDLESS MODE")
-                        .font(.caption2.bold())
-                        .tracking(1.1)
-                        .foregroundStyle(AppTheme.yellow)
-                    Text("High score \(store.endlessBest)")
-                        .font(.title3.bold())
-                        .foregroundStyle(.white)
-                    Text("All letters · No time limit")
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.78))
-                }
-                Spacer()
-                Image(systemName: "play.fill")
-                    .foregroundStyle(AppTheme.onLightSurface)
-                    .padding(13)
-                    .background(.white, in: Circle())
-            }
-            .padding(18)
-            .background(
-                LinearGradient(
-                    colors: [AppTheme.violet, AppTheme.blue],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ),
-                in: RoundedRectangle(cornerRadius: 27, style: .continuous)
-            )
-            .shadow(color: AppTheme.violet.opacity(0.22), radius: 16, y: 8)
-            .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
-        }
-        .buttonStyle(.plain)
     }
 }
 
-struct StatCard: View {
-    let icon: String; let value: String; let label: String; let color: Color
+/// Opens First Words; shared by Today and Learn.
+struct WordPracticeCard: View {
+    @Environment(LearningStore.self) private var store
+    let action: () -> Void
+
     var body: some View {
-        VStack(spacing: 7) {
-            Image(systemName: icon).foregroundStyle(color)
-            Text(value).font(.title3.bold()).foregroundStyle(AppTheme.ink)
-            Text(label).font(.caption2).foregroundStyle(AppTheme.secondary)
-        }
-        .frame(maxWidth: .infinity).padding(.vertical, 15)
-        .glassEffect(.regular, in: .rect(cornerRadius: 22))
+        ModeCard(icon: "textformat.abc", eyebrow: "FIRST WORDS", title: "Build words from letters",
+                 subtitle: "\(store.masteredWordIDs.count) of \(GeorgianWord.all.count) words learned",
+                 gradient: AppTheme.wordsGradient, shadow: AppTheme.coral, action: action)
+    }
+}
+
+/// Opens Endless Mode; shared by Today and Learn.
+struct EndlessPracticeCard: View {
+    @Environment(LearningStore.self) private var store
+    let action: () -> Void
+
+    var body: some View {
+        ModeCard(icon: "infinity", eyebrow: "ENDLESS MODE", title: "Keep the letters flowing",
+                 subtitle: "High score \(store.endlessBest) · No time limit", trailingIcon: "play.fill",
+                 gradient: AppTheme.endlessGradient, shadow: AppTheme.violet, action: action)
     }
 }

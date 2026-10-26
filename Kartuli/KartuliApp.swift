@@ -2,7 +2,7 @@ import SwiftUI
 
 @main
 struct KartuliApp: App {
-    @StateObject private var store: LearningStore
+    @State private var store: LearningStore
     private let preferences: UserDefaults
 
     init() {
@@ -10,22 +10,23 @@ struct KartuliApp: App {
         let testDefaults = QATestConfiguration.defaults
         let defaults = testDefaults ?? UserDefaults.standard
         preferences = defaults
-        _store = StateObject(wrappedValue: LearningStore(
+        _store = State(initialValue: LearningStore(
             defaults: defaults,
             widgetDefaults: testDefaults == nil ? UserDefaults(suiteName: StreakSnapshot.appGroupID) : nil,
             cancelReminder: { if testDefaults == nil { ReminderManager.cancelTodayReminder(now: $0) } }
         ))
         #else
         preferences = .standard
-        _store = StateObject(wrappedValue: LearningStore())
+        _store = State(initialValue: LearningStore())
         #endif
+        AppearanceMode.migrateLegacySetting(in: preferences)
     }
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
             LaunchExperienceView()
-                .environmentObject(store)
+                .environment(store)
                 .defaultAppStorage(preferences)
                 .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
                     store.refreshForCurrentDay()

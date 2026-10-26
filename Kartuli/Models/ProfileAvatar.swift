@@ -9,7 +9,7 @@ enum ProfileAvatar: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    var name: String {
+    var name: LocalizedStringResource {
         switch self {
         case .khinkali: "Khinkali"
         case .wine: "Wine"

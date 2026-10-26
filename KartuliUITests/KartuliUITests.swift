@@ -19,12 +19,19 @@ final class KartuliUITests: XCTestCase {
         return app
     }
 
-    private func reveal(_ element: XCUIElement, in app: XCUIApplication) {
+    /// Scrolls until the element is hittable and, if given, fully above a pinned
+    /// bottom control that would otherwise receive the tap.
+    private func reveal(_ element: XCUIElement, in app: XCUIApplication, above pinned: XCUIElement? = nil) {
+        func isClear() -> Bool {
+            guard element.isHittable else { return false }
+            guard let pinned, pinned.exists else { return true }
+            return element.frame.maxY <= pinned.frame.minY
+        }
         for _ in 0..<8 {
-            if element.isHittable { return }
+            if isClear() { return }
             app.swipeUp()
         }
-        XCTAssertTrue(element.isHittable)
+        XCTAssertTrue(isClear())
     }
 
     private func screenshot(_ app: XCUIApplication, name: String) {
@@ -44,7 +51,7 @@ final class KartuliUITests: XCTestCase {
             XCTAssertTrue(next.isHittable)
             next.tap()
             let answer = app.buttons[glyph]
-            reveal(answer, in: app)
+            reveal(answer, in: app, above: app.buttons["Check answer"])
             answer.tap()
             app.buttons["Check answer"].tap()
             app.buttons[index == 2 ? "Finish lesson" : "Continue"].tap()
@@ -71,7 +78,7 @@ final class KartuliUITests: XCTestCase {
         screenshot(app, name: "Large text discovery")
         app.buttons["Continue"].tap()
         let answer = app.buttons["ა"]
-        reveal(answer, in: app)
+        reveal(answer, in: app, above: app.buttons["Check answer"])
         answer.tap()
         XCTAssertTrue(app.buttons["Check answer"].isHittable)
         app.buttons["Check answer"].tap()
@@ -95,7 +102,7 @@ final class KartuliUITests: XCTestCase {
         app.buttons["End word practice"].tap()
         XCTAssertTrue(app.buttons["Finish for now"].isHittable)
         app.buttons["Finish for now"].tap()
-        app.tabBars.buttons["Alphabet"].tap()
+        app.tabBars.buttons["Learn"].tap()
         let endless = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Keep the letters flowing")).firstMatch
         reveal(endless, in: app)
         endless.tap()

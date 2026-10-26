@@ -4,7 +4,7 @@ import SwiftUI
 struct LaunchExperienceView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
-    @AppStorage("isDarkMode") private var isDarkMode = false
+    @AppStorage(AppearanceMode.storageKey) private var appearance = AppearanceMode.system
     @State private var isShowingSplash = true
     @State private var isReadyForInteraction = false
 
@@ -20,13 +20,24 @@ struct LaunchExperienceView: View {
                     .zIndex(1)
             }
         }
-        .preferredColorScheme(isShowingSplash || isDarkMode ? .dark : .light)
+        .onAppear(perform: applyInterfaceStyle)
+        .onChange(of: isShowingSplash) { applyInterfaceStyle() }
+        .onChange(of: appearance) { applyInterfaceStyle() }
         .onChange(of: scenePhase) { _, phase in
             // Returning from an interruption should always reveal the app immediately.
             if phase == .background {
                 isShowingSplash = false
                 isReadyForInteraction = true
             }
+        }
+    }
+
+    /// Applied to the window instead of `preferredColorScheme`, which does not
+    /// reliably return to the system setting after an explicit scheme was set.
+    private func applyInterfaceStyle() {
+        let style = isShowingSplash ? .dark : appearance.interfaceStyle
+        for case let scene as UIWindowScene in UIApplication.shared.connectedScenes {
+            scene.windows.forEach { $0.overrideUserInterfaceStyle = style }
         }
     }
 
@@ -234,5 +245,5 @@ private struct SplashScreenView: View {
 
 #Preview("Launch animation") {
     LaunchExperienceView()
-        .environmentObject(LearningStore())
+        .environment(LearningStore())
 }

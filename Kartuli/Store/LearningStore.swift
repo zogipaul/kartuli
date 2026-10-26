@@ -1,62 +1,81 @@
 import Foundation
+import Observation
 import SwiftUI
 import WidgetKit
 
+enum AppTab: Hashable {
+    case today, learn, alphabet, profile
+}
+
+/// Everything about the learner's progress except the activity history, stored
+/// as one JSON value. The history lives under its own key so that a single
+/// answer never re-serializes years of dates.
+struct LearningProgress: Codable, Equatable {
+    var learnedLetterIDs: Set<Int> = []
+    var xp = 0
+    var streak = 0
+    var longestStreak = 0
+    var dailyProgress = 0
+    var dailyProgressDate: Date?
+    var endlessBest = 0
+    var masteredWordIDs: Set<Int> = []
+    var learningStartedAt: Date
+}
+
+@Observable
 @MainActor
-final class LearningStore: ObservableObject {
-    @Published var selectedTab = 0
-    @Published private(set) var learnedLetterIDs: Set<Int>
-    @Published private(set) var xp: Int
-    @Published private(set) var streak: Int
-    @Published private(set) var longestStreak: Int
-    @Published private(set) var dailyProgress: Int
-    @Published private(set) var endlessBest: Int
-    @Published private(set) var masteredWordIDs: Set<Int>
-    @Published private(set) var activityDates: [Date]
-    @Published var isLessonPresented = false
-    @Published private(set) var currentDay: Date
+final class LearningStore {
+    var selectedTab = AppTab.today
+    var isLessonPresented = false
+    private(set) var learnedLetterIDs: Set<Int>
+    private(set) var xp: Int
+    private(set) var streak: Int
+    private(set) var longestStreak: Int
+    private(set) var dailyProgress: Int
+    private(set) var endlessBest: Int
+    private(set) var masteredWordIDs: Set<Int>
+    private(set) var activityDates: [Date]
+    private(set) var currentDay: Date
+    private var activityDays: Set<Date>
 
     /// A streak day is complete once the learner earns this many XP.
     let streakXPThreshold = 30
     let learningStartedAt: Date
     let welcomeMessage: String
 
-    private let defaults: UserDefaults
-    private let calendar: Calendar
-    private let nowProvider: () -> Date
-    private let widgetDefaults: UserDefaults?
-    private let reloadWidget: () -> Void
-    private let cancelReminder: (Date) -> Void
-    private var activityDays: Set<Date>
-    private var lastActivity: Date?
-    private var progressDate: Date?
-    private var indexedTimeZone: TimeZone
-    private var persisted: ProgressSnapshot?
+    @ObservationIgnored private let defaults: UserDefaults
+    @ObservationIgnored private let calendar: Calendar
+    @ObservationIgnored private let nowProvider: () -> Date
+    @ObservationIgnored private let widgetDefaults: UserDefaults?
+    @ObservationIgnored private let reloadWidget: () -> Void
+    @ObservationIgnored private let cancelReminder: (Date) -> Void
+    @ObservationIgnored private var lastActivity: Date?
+    @ObservationIgnored private var progressDate: Date?
+    @ObservationIgnored private var indexedTimeZone: TimeZone
+    @ObservationIgnored private var persisted: LearningProgress?
+    @ObservationIgnored private var persistedDates: [Date]?
 
-    private struct ProgressSnapshot: Equatable {
-        let letters: Set<Int>
-        let xp: Int
-        let streak: Int
-        let longestStreak: Int
-        let dailyProgress: Int
-        let endlessBest: Int
-        let words: Set<Int>
-        let dates: [Date]
-    }
-
-    private enum Keys {
-        static let dataVersion = "learningDataVersion"
-        static let learnedLetterIDs = "learnedLetterIDs"
-        static let xp = "xp"
-        static let streak = "streak"
-        static let longestStreak = "longestStreak"
-        static let dailyProgress = "dailyProgress"
-        static let dailyProgressDate = "dailyProgressDate"
-        static let endlessBest = "endlessBest"
-        static let endlessScoreDataVersion = "endlessScoreDataVersion"
-        static let masteredWordIDs = "masteredWordIDs"
+    enum Keys {
+        static let progress = "learningProgress"
         static let activityDates = "activityDates"
-        static let learningStartedAt = "learningStartedAt"
+        static let dataVersion = "learningDataVersion"
+        static let endlessScoreDataVersion = "endlessScoreDataVersion"
+
+        /// Individual keys used before `LearningProgress`; read once, then removed.
+        enum Legacy {
+            static let learnedLetterIDs = "learnedLetterIDs"
+            static let xp = "xp"
+            static let streak = "streak"
+            static let longestStreak = "longestStreak"
+            static let dailyProgress = "dailyProgress"
+            static let dailyProgressDate = "dailyProgressDate"
+            static let endlessBest = "endlessBest"
+            static let masteredWordIDs = "masteredWordIDs"
+            static let learningStartedAt = "learningStartedAt"
+
+            static let all = [learnedLetterIDs, xp, streak, longestStreak, dailyProgress,
+                              dailyProgressDate, endlessBest, masteredWordIDs, learningStartedAt]
+        }
     }
 
     private static let currentDataVersion = 2
@@ -79,48 +98,56 @@ final class LearningStore: ObservableObject {
         self.cancelReminder = cancelReminder
         indexedTimeZone = calendar.timeZone
         currentDay = calendar.startOfDay(for: now())
-        welcomeMessage = WelcomeMessage.all.randomElement()
-            ?? "Ready for your Georgian moment?"
+        welcomeMessage = WelcomeMessage.all.randomElement().map { String(localized: $0) }
+            ?? String(localized: "Ready for your Georgian moment?")
 
         let now = nowProvider()
         if defaults.integer(forKey: Keys.dataVersion) < Self.currentDataVersion {
             // Earlier builds shipped with sample progress. Start every existing
             // test installation with clean, real user data once.
-            Self.removeLegacyProgress(from: defaults)
+            (Keys.Legacy.all + [Keys.progress, Keys.activityDates]).forEach(defaults.removeObject(forKey:))
             defaults.set(Self.currentDataVersion, forKey: Keys.dataVersion)
-            defaults.set(now, forKey: Keys.learningStartedAt)
+            defaults.set(now, forKey: Keys.Legacy.learningStartedAt)
         }
         if defaults.integer(forKey: Keys.endlessScoreDataVersion) < 1 {
             // Older builds stored the best combo here. Endless high score now
             // represents the number of correct answers in a session.
-            defaults.removeObject(forKey: Keys.endlessBest)
+            defaults.removeObject(forKey: Keys.Legacy.endlessBest)
             defaults.set(1, forKey: Keys.endlessScoreDataVersion)
         }
 
-        learningStartedAt = defaults.object(forKey: Keys.learningStartedAt) as? Date ?? now
-        learnedLetterIDs = Set(defaults.array(forKey: Keys.learnedLetterIDs) as? [Int] ?? [])
-        xp = defaults.integer(forKey: Keys.xp)
-        let savedStreak = defaults.integer(forKey: Keys.streak)
-        streak = savedStreak
-        endlessBest = defaults.integer(forKey: Keys.endlessBest)
-        masteredWordIDs = Set(defaults.array(forKey: Keys.masteredWordIDs) as? [Int] ?? [])
+        let stored = defaults.data(forKey: Keys.progress)
+            .flatMap { try? JSONDecoder().decode(LearningProgress.self, from: $0) }
+        let progress = stored ?? Self.legacyProgress(in: defaults, now: now)
+        persisted = stored
+
+        learningStartedAt = progress.learningStartedAt
+        learnedLetterIDs = progress.learnedLetterIDs
+        xp = progress.xp
+        streak = progress.streak
+        endlessBest = progress.endlessBest
+        masteredWordIDs = progress.masteredWordIDs
         let savedActivityDates = defaults.array(forKey: Keys.activityDates) as? [Date] ?? []
         activityDates = savedActivityDates
+        persistedDates = savedActivityDates
         activityDays = Set(savedActivityDates.map { calendar.startOfDay(for: $0) })
         lastActivity = savedActivityDates.max()
         // Recover existing records before an expired current streak is reset.
         longestStreak = max(
-            defaults.integer(forKey: Keys.longestStreak),
-            savedStreak,
+            progress.longestStreak,
+            progress.streak,
             Self.longestRun(in: savedActivityDates, calendar: calendar)
         )
 
-        progressDate = defaults.object(forKey: Keys.dailyProgressDate) as? Date
+        progressDate = progress.dailyProgressDate
         dailyProgress = progressDate.map { calendar.isDate($0, inSameDayAs: now) } == true
-            ? defaults.integer(forKey: Keys.dailyProgress)
+            ? progress.dailyProgress
             : 0
 
         refreshForCurrentDay(now: now)
+        if stored == nil {
+            Keys.Legacy.all.forEach(defaults.removeObject(forKey:))
+        }
     }
 
     var nextLetters: [GeorgianLetter] {
@@ -140,7 +167,7 @@ final class LearningStore: ObservableObject {
         isPathComplete
     }
 
-    var todayLabel: String {
+    var todayLabel: LocalizedStringResource {
         hasSecuredStreakToday ? "STREAK SECURED" : "\(xpUntilStreak) XP TO STREAK"
     }
 
@@ -152,16 +179,15 @@ final class LearningStore: ObservableObject {
         max(0, streakXPThreshold - dailyProgress)
     }
 
-    var currentWeekActivity: [(label: String, isActive: Bool)] {
+    var currentWeekActivity: [(date: Date, isActive: Bool)] {
         var mondayCalendar = calendar
         mondayCalendar.firstWeekday = 2
         let weekStart = mondayCalendar.dateInterval(of: .weekOfYear, for: currentDay)?.start
             ?? currentDay
-        let labels = ["M", "T", "W", "T", "F", "S", "S"]
 
-        return labels.enumerated().map { offset, label in
+        return (0..<7).map { offset in
             let date = mondayCalendar.date(byAdding: .day, value: offset, to: weekStart) ?? weekStart
-            return (label, activityDays.contains(mondayCalendar.startOfDay(for: date)))
+            return (date, activityDays.contains(mondayCalendar.startOfDay(for: date)))
         }
     }
 
@@ -201,7 +227,6 @@ final class LearningStore: ObservableObject {
         if progressDate.map({ calendar.isDate($0, inSameDayAs: now) }) != true {
             if dailyProgress != 0 { dailyProgress = 0 }
             progressDate = day
-            defaults.set(day, forKey: Keys.dailyProgressDate)
         }
         let validStreak = StreakSnapshot(streak: streak, lastActivity: lastActivity)
             .value(at: now, calendar: calendar)
@@ -239,22 +264,36 @@ final class LearningStore: ObservableObject {
     }
 
     private func persist() {
-        let next = ProgressSnapshot(letters: learnedLetterIDs, xp: xp, streak: streak,
-                                    longestStreak: longestStreak, dailyProgress: dailyProgress,
-                                    endlessBest: endlessBest, words: masteredWordIDs, dates: activityDates)
-        // Persist immediately, but only write fields that actually changed. In
-        // particular, a word answer must not serialize the entire activity history.
-        if persisted?.letters != next.letters { defaults.set(Array(next.letters), forKey: Keys.learnedLetterIDs) }
-        if persisted?.xp != next.xp { defaults.set(next.xp, forKey: Keys.xp) }
-        if persisted?.streak != next.streak { defaults.set(next.streak, forKey: Keys.streak) }
-        if persisted?.longestStreak != next.longestStreak { defaults.set(next.longestStreak, forKey: Keys.longestStreak) }
-        if persisted?.dailyProgress != next.dailyProgress { defaults.set(next.dailyProgress, forKey: Keys.dailyProgress) }
-        if persisted?.endlessBest != next.endlessBest { defaults.set(next.endlessBest, forKey: Keys.endlessBest) }
-        if persisted?.words != next.words { defaults.set(Array(next.words), forKey: Keys.masteredWordIDs) }
-        if persisted?.dates != next.dates { defaults.set(next.dates, forKey: Keys.activityDates) }
-        if persisted == nil { defaults.set(learningStartedAt, forKey: Keys.learningStartedAt) }
-        persisted = next
+        let next = LearningProgress(
+            learnedLetterIDs: learnedLetterIDs, xp: xp, streak: streak,
+            longestStreak: longestStreak, dailyProgress: dailyProgress,
+            dailyProgressDate: progressDate, endlessBest: endlessBest,
+            masteredWordIDs: masteredWordIDs, learningStartedAt: learningStartedAt
+        )
+        // Persist immediately, but skip writes when nothing changed.
+        if persisted != next, let data = try? JSONEncoder().encode(next) {
+            defaults.set(data, forKey: Keys.progress)
+            persisted = next
+        }
+        if persistedDates != activityDates {
+            defaults.set(activityDates, forKey: Keys.activityDates)
+            persistedDates = activityDates
+        }
         syncStreakToWidget()
+    }
+
+    private static func legacyProgress(in defaults: UserDefaults, now: Date) -> LearningProgress {
+        LearningProgress(
+            learnedLetterIDs: Set(defaults.array(forKey: Keys.Legacy.learnedLetterIDs) as? [Int] ?? []),
+            xp: defaults.integer(forKey: Keys.Legacy.xp),
+            streak: defaults.integer(forKey: Keys.Legacy.streak),
+            longestStreak: defaults.integer(forKey: Keys.Legacy.longestStreak),
+            dailyProgress: defaults.integer(forKey: Keys.Legacy.dailyProgress),
+            dailyProgressDate: defaults.object(forKey: Keys.Legacy.dailyProgressDate) as? Date,
+            endlessBest: defaults.integer(forKey: Keys.Legacy.endlessBest),
+            masteredWordIDs: Set(defaults.array(forKey: Keys.Legacy.masteredWordIDs) as? [Int] ?? []),
+            learningStartedAt: defaults.object(forKey: Keys.Legacy.learningStartedAt) as? Date ?? now
+        )
     }
 
     private static func longestRun(in dates: [Date], calendar: Calendar) -> Int {
@@ -287,19 +326,5 @@ final class LearningStore: ObservableObject {
         widgetDefaults.set(streak, forKey: StreakSnapshot.streakKey)
         widgetDefaults.set(lastActivity, forKey: StreakSnapshot.lastActivityKey)
         reloadWidget()
-    }
-
-    private static func removeLegacyProgress(from defaults: UserDefaults) {
-        [
-            Keys.learnedLetterIDs,
-            Keys.xp,
-            Keys.streak,
-            Keys.longestStreak,
-            Keys.dailyProgress,
-            Keys.dailyProgressDate,
-            Keys.endlessBest,
-            Keys.activityDates,
-            Keys.learningStartedAt
-        ].forEach(defaults.removeObject(forKey:))
     }
 }

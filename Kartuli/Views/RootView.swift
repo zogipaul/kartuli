@@ -1,14 +1,15 @@
 import SwiftUI
 
 struct RootView: View {
-    @EnvironmentObject private var store: LearningStore
+    @Environment(LearningStore.self) private var store
 
     var body: some View {
+        @Bindable var store = store
         TabView(selection: $store.selectedTab) {
-            Tab("Today", systemImage: "house.fill", value: 0) { HomeView() }
-            Tab("Learn", systemImage: "text.book.closed.fill", value: 1) { LearnPathView() }
-            Tab("Alphabet", systemImage: "character.book.closed.fill", value: 2) { AlphabetView() }
-            Tab("Profile", systemImage: "person.crop.circle.fill", value: 3) { ProfileView() }
+            Tab("Today", systemImage: "house.fill", value: AppTab.today) { HomeView() }
+            Tab("Learn", systemImage: "map.fill", value: AppTab.learn) { LearnPathView() }
+            Tab("Alphabet", systemImage: "character.book.closed.fill", value: AppTab.alphabet) { AlphabetView() }
+            Tab("Profile", systemImage: "person.crop.circle.fill", value: AppTab.profile) { ProfileView() }
         }
         .tint(AppTheme.coral)
         .sheet(isPresented: $store.isLessonPresented) {

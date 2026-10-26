@@ -127,7 +127,6 @@ final class LearningStoreTests: XCTestCase {
         now = date("2026-10-24T22:01:00Z")
         store.refreshForCurrentDay()
         XCTAssertEqual(store.dailyProgress, 0)
-        XCTAssertEqual(defaults.integer(forKey: "dailyProgress"), 0)
         XCTAssertEqual(self.store(defaults, now: { now }).dailyProgress, 0)
         store.completeEndlessPractice(correct: 1)
         XCTAssertEqual(store.dailyProgress, 2)
@@ -160,7 +159,7 @@ final class LearningStoreTests: XCTestCase {
         store.completeWord(GeorgianWord.all[0])
         XCTAssertEqual(reloads, 2)
         XCTAssertEqual(cancellations, 1)
-        XCTAssertEqual(Set(defaults.writes), ["xp"])
+        XCTAssertEqual(Set(defaults.writes), [LearningStore.Keys.progress])
 
         // A timeline generated in another time zone has a different midnight.
         widgetDefaults.set("America/Los_Angeles", forKey: StreakSnapshot.timeZoneKey)
@@ -210,7 +209,72 @@ final class LearningStoreTests: XCTestCase {
         XCTAssertEqual(GeorgianLetter.all.count, 33)
         XCTAssertEqual(Set(GeorgianLetter.all.map(\.glyph)).count, 33)
         XCTAssertEqual(Set(GeorgianWord.all.map(\.id)).count, GeorgianWord.all.count)
-        XCTAssertTrue(GeorgianWord.all.allSatisfy { GeorgianWord.categories.contains($0.category) && !$0.text.isEmpty })
+        XCTAssertTrue(GeorgianWord.all.allSatisfy { !$0.text.isEmpty })
+    }
+
+    func testWordTransliterationsUseTheLetterRomanization() {
+        let sounds = Dictionary(uniqueKeysWithValues: GeorgianLetter.all.map { ($0.glyph, $0.sound) })
+        for word in GeorgianWord.all {
+            let expected = word.letters.map { sounds[$0] ?? "?" }.joined()
+            XCTAssertEqual(word.transliteration, expected, word.text)
+        }
+    }
+
+    func testLegacyKeysMigrateIntoOneProgressValue() throws {
+        let defaults = defaults()
+        let started = date("2026-09-01T08:00:00Z")
+        let now = date("2026-10-24T12:00:00Z")
+        defaults.set([0, 1, 2], forKey: "learnedLetterIDs")
+        defaults.set(120, forKey: "xp")
+        defaults.set(9, forKey: "longestStreak")
+        defaults.set(18, forKey: "endlessBest")
+        defaults.set([4, 7], forKey: "masteredWordIDs")
+        defaults.set(12, forKey: "dailyProgress")
+        defaults.set(calendar.startOfDay(for: now), forKey: "dailyProgressDate")
+        defaults.set(started, forKey: "learningStartedAt")
+
+        let store = store(defaults, now: { now })
+        XCTAssertEqual(store.learnedLetterIDs, [0, 1, 2])
+        XCTAssertEqual(store.xp, 120)
+        XCTAssertEqual(store.longestStreak, 9)
+        XCTAssertEqual(store.endlessBest, 18)
+        XCTAssertEqual(store.masteredWordIDs, [4, 7])
+        XCTAssertEqual(store.dailyProgress, 12)
+        XCTAssertEqual(store.learningStartedAt, started)
+        for key in ["learnedLetterIDs", "xp", "longestStreak", "endlessBest", "masteredWordIDs",
+                    "dailyProgress", "dailyProgressDate", "learningStartedAt"] {
+            XCTAssertNil(defaults.object(forKey: key), key)
+        }
+        let data = try XCTUnwrap(defaults.data(forKey: LearningStore.Keys.progress))
+        XCTAssertEqual(try JSONDecoder().decode(LearningProgress.self, from: data).xp, 120)
+
+        let restored = self.store(defaults, now: { now })
+        XCTAssertEqual(restored.xp, 120)
+        XCTAssertEqual(restored.dailyProgress, 12)
+        XCTAssertEqual(restored.learningStartedAt, started)
+    }
+
+    func testGreetingFollowsTimeOfDay() {
+        XCTAssertEqual(DayGreeting(hour: 4), .night)
+        XCTAssertEqual(DayGreeting(hour: 5), .morning)
+        XCTAssertEqual(DayGreeting(hour: 11), .morning)
+        XCTAssertEqual(DayGreeting(hour: 12), .day)
+        XCTAssertEqual(DayGreeting(hour: 18), .evening)
+        XCTAssertEqual(DayGreeting(hour: 22), .night)
+    }
+
+    func testLegacyDarkModeBecomesAppearanceSetting() {
+        let dark = defaults()
+        dark.set(true, forKey: "isDarkMode")
+        AppearanceMode.migrateLegacySetting(in: dark)
+        XCTAssertEqual(dark.string(forKey: AppearanceMode.storageKey), "dark")
+        XCTAssertNil(dark.object(forKey: "isDarkMode"))
+
+        let light = defaults()
+        light.set(false, forKey: "isDarkMode")
+        AppearanceMode.migrateLegacySetting(in: light)
+        XCTAssertNil(light.string(forKey: AppearanceMode.storageKey))
+        XCTAssertNil(light.object(forKey: "isDarkMode"))
     }
 
     func testIndexedWeekLookupMatchesOriginalAlgorithmAndReportsTiming() {

@@ -6,57 +6,27 @@ enum ReminderManager {
     private static let notificationIDPrefix = "daily-learning-reminder-"
     private static let schedulingHorizonInDays = 30
 
-    private static let messages: [(title: String, body: String)] = [
-        ("Georgian arc loading…", "One tiny lesson and your streak stays absolutely unbothered."),
-        ("Bestie, the alphabet called", "It said your Georgian glow-up is waiting. Just 30 XP."),
-        ("Streak check 👀", "Your streak is giving main character. Don’t ghost it now."),
-        ("Quick Kartuli side quest", "A few letters, 30 XP, zero dramatic plot twists."),
-        ("Your streak has entered the chat", "Secure it before it starts sending “u up?” texts."),
-        ("Tiny lesson, huge aura", "Earn 30 XP and keep that Georgian-learning aura immaculate."),
-        ("Not to be dramatic…", "But your streak would really love a quick Georgian lesson."),
-        ("POV: you open Kartuli", "You learn Georgian, save your streak, and become iconic."),
-        ("The streak is streaking", "Keep it that way with one quick lesson. Slay responsibly."),
-        ("Low effort, high lore", "30 XP today adds another chapter to your Georgian era."),
-        ("Respectfully: lock in", "Your Georgian streak needs just one tiny bit of attention."),
-        ("A message from future you", "Thanks for doing that quick Kartuli lesson. Very based."),
-        ("Your daily Georgian DLC", "New knowledge is ready. Download it directly into your brain."),
-        ("No pressure, but also…", "That streak is looking too cute to lose. Go grab 30 XP."),
-        ("Brain gains incoming", "A short Georgian lesson is basically leg day for your neurons."),
-        ("Streak maintenance era", "Pop in, earn 30 XP, leave with your crown still on."),
-        ("This is your sign", "Yes, this one. Open Kartuli and secure today’s streak."),
-        ("Georgian? In this economy?", "Absolutely. A quick lesson costs zero coins and gives big XP."),
-        ("The vibes demand Kartuli", "Do one short lesson and restore balance to the timeline."),
-        ("Your streak misses you", "It’s been approximately forever. Come earn today’s 30 XP."),
-        ("Hot learner summer", "Keep the Georgian streak warm with a quick lesson."),
-        ("Plot armor activated", "Complete a lesson now and protect your streak from today’s finale."),
-        ("Be so for real rn", "You’re only 30 XP away from another successful streak day."),
-        ("Georgian era status: pending", "One quick lesson will change that status to iconic."),
-        ("The letters are gossiping", "They heard you might skip today. Prove them wrong."),
-        ("Daily slay opportunity", "Learn a little Georgian and keep your streak serving."),
-        ("Touch grass later", "First, touch the Georgian alphabet for one quick lesson."),
-        ("Streak insurance reminder", "Pay today’s premium: 30 XP and roughly two minutes."),
-        ("Your Du— nope, Kartuli owl", "We don’t have an owl. We do have a streak worth saving."),
-        ("Tiny task, elite outcome", "A short lesson now keeps your Georgian streak undefeated."),
-        ("Consider this a soft launch", "Of today’s Georgian study session. Open Kartuli to go official."),
-        ("Streak lore update needed", "Add today’s chapter with 30 XP. The fandom is waiting."),
-        ("Georgian brainrot, but useful", "Learn a few letters and keep the productive obsession alive."),
-        ("You 🤝 today’s streak", "Make the collab happen with one quick Kartuli lesson."),
-        ("The group chat voted", "Unanimous decision: you should earn today’s Georgian XP."),
-        ("Certified learning moment", "Open Kartuli, do the thing, collect the streak. Easy."),
-        ("Don’t fumble the streak", "You built it. Now secure today with a tiny Georgian lesson."),
-        ("A very chill emergency", "Your streak needs 30 XP. No panic, just Kartuli."),
-        ("Today’s micro-win awaits", "One lesson. One streak day. Immaculate momentum."),
-        ("Georgian glow-up check", "Consistency is the fit. Add 30 XP and wear it proudly."),
-        ("The algorithm chose you", "For a highly exclusive two-minute Georgian learning event."),
-        ("Breaking news", "Local legend keeps Georgian streak alive with one quick lesson."),
-        ("Your streak said bet", "Now match that energy and earn today’s 30 XP."),
-        ("Side quest available", "Reward: Georgian knowledge, 30 XP, and unreasonable amounts of aura."),
-        ("Keep cooking, chef", "Your Georgian streak is on the menu. Serve one quick lesson."),
-        ("We listen, we don’t judge", "Unless you ghost today’s streak. Kidding. Mostly."),
-        ("Delulu is the solulu", "Pretend you’re fluent, then make it slightly more true today."),
-        ("Momentum looks good on you", "Secure today’s 30 XP and keep the fit complete."),
-        ("One lesson, no crumbs", "Finish today’s Georgian goal and leave the streak plate spotless."),
-        ("Final boss: 30 XP", "Plot twist: it’s actually a very short Georgian lesson.")
+    private static let messages: [(title: LocalizedStringResource, body: LocalizedStringResource)] = [
+        ("Time for a little Georgian", "One short lesson keeps your streak going."),
+        ("Your streak is waiting", "Earn 30 XP today to keep it alive."),
+        ("Three letters, a few minutes", "Today’s lesson is ready when you are."),
+        ("Keep the momentum", "A quick session now makes tomorrow easier."),
+        ("ქართული is calling", "Open Kartuli and secure today’s streak."),
+        ("A small step for today", "Learn a few letters and collect your 30 XP."),
+        ("Ready for a quick practice?", "Five minutes of Georgian is all it takes."),
+        ("Don’t lose your streak", "There’s still time to earn today’s 30 XP."),
+        ("New letters are waiting", "Meet them in today’s short lesson."),
+        ("Practice makes it stick", "A quick review helps the letters feel familiar."),
+        ("Your Georgian moment", "Take a short break and learn something new."),
+        ("Almost a habit", "Come back today and keep your learning streak growing."),
+        ("A few minutes, real progress", "Today’s Georgian goal is within reach."),
+        ("Keep your streak alive", "One lesson or 15 correct answers is enough."),
+        ("Letters, words, progress", "Pick up where you left off in Kartuli."),
+        ("Good time to practice", "A short Georgian session fits into almost any day."),
+        ("Today counts", "Secure your streak with a quick lesson."),
+        ("Your next word is close", "Keep learning and read more Georgian every day."),
+        ("Steady wins", "Small daily lessons add up faster than you think."),
+        ("Still on today’s list", "Finish your Georgian goal before the day ends.")
     ]
 
     static func setReminder(
@@ -107,8 +77,8 @@ enum ReminderManager {
 
                 let message = messages.randomElement() ?? messages[0]
                 let content = UNMutableNotificationContent()
-                content.title = message.title
-                content.body = message.body
+                content.title = String(localized: message.title)
+                content.body = String(localized: message.body)
 
                 let trigger = UNCalendarNotificationTrigger(
                     dateMatching: calendar.dateComponents(

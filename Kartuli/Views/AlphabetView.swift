@@ -1,15 +1,23 @@
 import SwiftUI
 
+/// Alphabet: a reference for looking up any letter.
 struct AlphabetView: View {
-    @EnvironmentObject private var store: LearningStore
+    @Environment(LearningStore.self) private var store
     @State private var query = ""
     @State private var selectedLetter: GeorgianLetter?
-    @State private var isEndlessPresented = false
+    @ScaledMetric(relativeTo: .title) private var tileWidth: CGFloat = 72
 
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 11), count: 4)
+    private var columns: [GridItem] {
+        [GridItem(.adaptive(minimum: tileWidth), spacing: 11)]
+    }
+
     private var filtered: [GeorgianLetter] {
         guard !query.isEmpty else { return GeorgianLetter.all }
-        return GeorgianLetter.all.filter { $0.glyph.contains(query) || $0.name.localizedCaseInsensitiveContains(query) || $0.sound.localizedCaseInsensitiveContains(query) }
+        return GeorgianLetter.all.filter {
+            $0.glyph.contains(query)
+                || $0.name.localizedCaseInsensitiveContains(query)
+                || $0.sound.localizedCaseInsensitiveContains(query)
+        }
     }
 
     var body: some View {
@@ -19,70 +27,54 @@ struct AlphabetView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("The Georgian alphabet").font(.system(size: 30, weight: .heavy, design: .rounded)).foregroundStyle(AppTheme.ink)
-                            Text("33 letters · Mkhedruli script").foregroundStyle(AppTheme.secondary)
+                            Text("The Georgian alphabet")
+                                .scaledFont(30, weight: .heavy, design: .rounded, relativeTo: .largeTitle)
+                                .foregroundStyle(AppTheme.ink)
+                            Text("33 letters · Mkhedruli script · \(store.learnedLetterIDs.count) learned")
+                                .foregroundStyle(AppTheme.secondary)
                         }
-                        AlphabetPathSection()
-                        endlessCard
                         LazyVGrid(columns: columns, spacing: 11) {
                             ForEach(filtered) { letter in
-                                let learned = store.learnedLetterIDs.contains(letter.id)
-                                Button { selectedLetter = letter } label: {
-                                    VStack(spacing: 3) {
-                                        Text(letter.glyph).font(.system(size: 36, weight: .bold))
-                                        Text(letter.sound).font(.caption2.bold()).opacity(0.72)
-                                    }
-                                    .foregroundStyle(learned ? AppTheme.violet : AppTheme.ink)
-                                    .frame(maxWidth: .infinity).frame(height: 78)
-                                    .glassEffect(learned ? .regular.tint(AppTheme.violet.opacity(0.12)) : .regular, in: .rect(cornerRadius: 20))
-                                    .overlay(alignment: .topTrailing) {
-                                        if learned { Image(systemName: "checkmark.circle.fill").font(.caption).foregroundStyle(AppTheme.mint).padding(7) }
-                                    }
-                                }
-                                .buttonStyle(.plain)
+                                letterTile(letter)
                             }
                         }
+                        if filtered.isEmpty {
+                            ContentUnavailableView.search(text: query)
+                        }
+                        Text("An apostrophe marks an ejective sound: say it with a short, popped burst and no puff of air.")
+                            .font(.footnote)
+                            .foregroundStyle(AppTheme.secondary)
                     }
                     .padding(20).padding(.bottom, 30)
                 }
             }
             .searchable(text: $query, prompt: "Letter, name or sound")
             .sheet(item: $selectedLetter) { LetterDetailView(letter: $0) }
-            .fullScreenCover(isPresented: $isEndlessPresented) { EndlessPracticeView() }
             .toolbar(.hidden, for: .navigationBar)
         }
     }
 
-    private var endlessCard: some View {
-        Button {
-            if store.isEndlessUnlocked {
-                isEndlessPresented = true
+    private func letterTile(_ letter: GeorgianLetter) -> some View {
+        let learned = store.learnedLetterIDs.contains(letter.id)
+        return Button { selectedLetter = letter } label: {
+            VStack(spacing: 3) {
+                Text(verbatim: letter.glyph).scaledFont(36, relativeTo: .title)
+                Text(verbatim: letter.sound).font(.caption2.bold()).opacity(0.72)
             }
-        } label: {
-            HStack(spacing: 16) {
-                ZStack {
-                    Circle().fill(.white.opacity(0.18)).frame(width: 64, height: 64)
-                    Image(systemName: store.isEndlessUnlocked ? "infinity" : "lock.fill")
-                        .font(.system(size: 29, weight: .bold)).foregroundStyle(.white)
+            .foregroundStyle(learned ? AppTheme.violet : AppTheme.ink)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .glassEffect(learned ? .regular.tint(AppTheme.violet.opacity(0.12)) : .regular, in: .rect(cornerRadius: 20))
+            .overlay(alignment: .topTrailing) {
+                if learned {
+                    Image(systemName: "checkmark.circle.fill").font(.caption).foregroundStyle(AppTheme.mint).padding(7)
                 }
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(store.isEndlessUnlocked ? "ENDLESS PRACTICE" : "LOCKED")
-                        .font(.caption2.bold()).tracking(1.1).foregroundStyle(AppTheme.yellow)
-                    Text(store.isEndlessUnlocked ? "Keep the letters flowing" : "Complete your alphabet path")
-                        .font(.headline.bold()).foregroundStyle(.white)
-                    Text(store.isEndlessUnlocked ? "High score \(store.endlessBest) · No time limit" : "\(store.learnedLetterIDs.count) of \(GeorgianLetter.all.count) letters learned")
-                        .font(.caption).foregroundStyle(.white.opacity(0.75))
-                }
-                Spacer()
-                Image(systemName: store.isEndlessUnlocked ? "play.fill" : "flag.checkered")
-                    .foregroundStyle(AppTheme.onLightSurface).padding(13).background(.white, in: Circle())
             }
-            .padding(18)
-            .background(LinearGradient(colors: [AppTheme.violet, AppTheme.blue], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 27, style: .continuous))
-            .shadow(color: AppTheme.violet.opacity(0.22), radius: 16, y: 8)
-            .contentShape(RoundedRectangle(cornerRadius: 27, style: .continuous))
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(Text(letter.spokenName))
+        .accessibilityValue(learned ? Text("Learned") : Text("New"))
+        .accessibilityHint(Text("Sounds like \(letter.sound)"))
     }
 }
 
@@ -93,30 +85,53 @@ private struct LetterDetailView: View {
     var body: some View {
         ZStack {
             AppBackground()
-            VStack(spacing: 24) {
-                HStack { Spacer(); Button("Done") { dismiss() }.font(.headline).foregroundStyle(AppTheme.coral) }
-                Text(letter.glyph).font(.system(size: 130, weight: .bold)).foregroundStyle(AppTheme.violet)
-                VStack(spacing: 7) {
-                    Text(letter.name.capitalized).font(.title.bold()).foregroundStyle(AppTheme.ink)
-                    Text("Sounds like “\(letter.sound)”").foregroundStyle(AppTheme.secondary)
+            ScrollView {
+                VStack(spacing: 24) {
+                    HStack { Spacer(); Button("Done") { dismiss() }.font(.headline).foregroundStyle(AppTheme.coral) }
+                    Text(verbatim: letter.glyph)
+                        .scaledFont(130, relativeTo: .largeTitle, maxSize: 190)
+                        .foregroundStyle(AppTheme.violet)
+                        .accessibilityLabel(Text(letter.spokenName))
+                    LetterFacts(letter: letter)
                 }
-                GlassCard {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(letter.example).font(.title2.bold()).foregroundStyle(AppTheme.ink)
-                            Text(letter.translation.capitalized).foregroundStyle(AppTheme.secondary)
-                        }
-                        Spacer()
-                        Image(systemName: "text.book.closed.fill")
-                            .font(.title2)
-                            .foregroundStyle(AppTheme.coral)
-                    }
-                }
-                Spacer()
+                .padding(24)
             }
-            .padding(24)
         }
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
+    }
+}
+
+/// Name, sound and example word; shared by lessons and the alphabet detail.
+struct LetterFacts: View {
+    let letter: GeorgianLetter
+
+    var body: some View {
+        VStack(spacing: 20) {
+            VStack(spacing: 6) {
+                Text(verbatim: letter.name.capitalized)
+                    .scaledFont(29, design: .rounded, relativeTo: .title)
+                    .foregroundStyle(AppTheme.ink)
+                Text("Sounds like “\(letter.sound)”").font(.title3).foregroundStyle(AppTheme.secondary)
+                if letter.isEjective {
+                    Text("Ejective: a short, popped sound without a puff of air.")
+                        .font(.footnote)
+                        .foregroundStyle(AppTheme.secondary)
+                        .multilineTextAlignment(.center)
+                }
+            }
+            GlassCard {
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(verbatim: letter.example).font(.title2.bold()).foregroundStyle(AppTheme.ink)
+                        Text(letter.translation).foregroundStyle(AppTheme.secondary)
+                    }
+                    Spacer()
+                    Image(systemName: "character.book.closed.fill")
+                        .foregroundStyle(AppTheme.coral).font(.title2)
+                        .accessibilityHidden(true)
+                }
+            }
+        }
     }
 }
