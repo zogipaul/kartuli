@@ -114,34 +114,49 @@ struct LockedModeCard: View {
         HStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .fill(tint.opacity(0.12))
+                    .fill(AppTheme.secondary.opacity(0.12))
                     .frame(width: 62, height: 62)
-                Image(systemName: "lock.fill")
+                Image(systemName: symbol)
                     .font(.title3.bold())
-                    .foregroundStyle(tint)
+                    .foregroundStyle(AppTheme.secondary.opacity(0.5))
+                Image(systemName: "lock.fill")
+                    .font(.caption.bold())
+                    .foregroundStyle(AppTheme.ink)
+                    .frame(width: 24, height: 24)
+                    .background(tint.opacity(0.85), in: Circle())
+                    .offset(x: 21, y: 21)
             }
             VStack(alignment: .leading, spacing: 4) {
                 Text(eyebrow)
                     .font(.caption2.bold())
                     .tracking(1.1)
-                    .foregroundStyle(tint)
+                    .foregroundStyle(AppTheme.secondary)
                 Text(title)
                     .font(.headline.bold())
-                    .foregroundStyle(AppTheme.ink)
+                    .foregroundStyle(AppTheme.ink.opacity(0.7))
                 Text(subtitle)
                     .font(.caption)
                     .foregroundStyle(AppTheme.secondary)
             }
             Spacer(minLength: 4)
-            Image(systemName: symbol)
-                .font(.title3.bold())
-                .foregroundStyle(AppTheme.secondary.opacity(0.65))
-                .accessibilityHidden(true)
+            Label("Locked", systemImage: "lock.fill")
+                .font(.caption2.bold())
+                .textCase(.uppercase)
+                .foregroundStyle(AppTheme.secondary)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(AppTheme.secondary.opacity(0.14), in: Capsule())
         }
         .padding(18)
         .frame(maxWidth: .infinity)
         .glassEffect(.regular, in: .rect(cornerRadius: 27))
+        .overlay {
+            RoundedRectangle(cornerRadius: 27)
+                .strokeBorder(AppTheme.secondary.opacity(0.35), style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
+        }
+        .opacity(0.75)
         .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isStaticText)
     }
 }
 

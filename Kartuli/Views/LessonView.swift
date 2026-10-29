@@ -43,6 +43,7 @@ struct LessonView: View {
             }
         }
         .interactiveDismissDisabled(!finished)
+        .requestsReview(when: finished)
         .onAppear {
             for letter in letters where optionsByLetterID[letter.id] == nil {
                 optionsByLetterID[letter.id] = GeorgianLetter.quizOptions(for: letter)

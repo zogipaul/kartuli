@@ -58,6 +58,7 @@ struct EndlessPracticeView: View {
             if showSummary { summary }
             else { practice }
         }
+        .requestsReview(when: showSummary && correct > 0)
         .interactiveDismissDisabled()
     }
 

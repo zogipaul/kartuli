@@ -43,6 +43,7 @@ struct WordPracticeView: View {
             }
         }
         .interactiveDismissDisabled()
+        .requestsReview(when: showSummary && correct > 0)
         .onAppear {
             guard words.isEmpty else { return }
             startSession()

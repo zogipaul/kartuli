@@ -1971,6 +1971,16 @@
         }
       }
     },
+    "Locked": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gesperrt"
+          }
+        }
+      }
+    },
     "Locked for now": {
       "localizations": {
         "de": {
